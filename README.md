@@ -4,7 +4,7 @@
 
 O **Linketinder** é uma aplicação de console escrita em **Groovy** que
 simula uma plataforma de recrutamento semelhante ao LinkedIn + Tinder.\
-Permite cadastrar **candidatos** e **empresas**, além de listá-los.
+Permite cadastrar **candidatos** e **empresas**, além de listá-los e **curtir perfis**.
 
 Este projeto foi desenvolvido como prática de programação orientada a
 objetos com Groovy.
@@ -17,6 +17,8 @@ objetos com Groovy.
 -   Listar empresas cadastradas
 -   Cadastrar novos candidatos via console
 -   Cadastrar novas empresas via console
+-   **Curtir candidatos ou vagas (empresas)**
+-   **Rastrear curtidas enviadas**
 
 ------------------------------------------------------------------------
 
@@ -54,20 +56,6 @@ No diretório raiz do projeto, rode:
 ``` bash
 groovyc org/Entity/Candidato.groovy org/Entity/Empresa.groovy Linketinder.groovy
 groovy Linketinder
-```
-
-------------------------------------------------------------------------
-
-## Exemplo de Uso
-
-``` text
-Menu Principal
-1 - Listar Candidatos
-2 - Listar Empresas
-3 - Cadastrar Candidato
-4 - Cadastrar Empresa
-0 - Sair
-Escolha uma opção:
 ```
 
 ------------------------------------------------------------------------
