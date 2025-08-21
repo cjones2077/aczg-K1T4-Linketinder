@@ -8,7 +8,7 @@ abstract class Pessoa {
 
     @Override
     String toString() {
-        return """Nome: $nome
+        """Nome: $nome
         Email: $email
         CEP: $cep
         Descrição: $descricao"""
@@ -23,7 +23,7 @@ class Candidato extends Pessoa {
 
     @Override
     String toString() {
-        return """[Candidato]
+        """[Candidato]
         ${super.toString()}
         CPF: $cpf
         Idade: $idade
@@ -40,7 +40,7 @@ class Empresa extends Pessoa {
 
     @Override
     String toString() {
-        return """[Empresa]
+        """[Empresa]
         ${super.toString()}
         CNPJ: $cnpj
         País: $pais

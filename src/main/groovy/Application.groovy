@@ -1,18 +1,33 @@
 import org.Entity.Candidato
+import org.Entity.Curtida
 import org.Entity.Empresa
+import org.Entity.Pessoa
 
 class Linketinder {
     List<Candidato> candidatos = []
     List<Empresa> empresas = []
+    List<Curtida> curtidas = []
 
-    void listarCandidatos() {
-        println "\n- Candidatos: -"
-        candidatos.each { println it; println "" }
+    void listarCurtidas() {
+        println "\n-- Histórico de Curtidas --"
+        curtidas.each { println it }
     }
 
+    void listarCandidatos() {
+        println "\n-- Candidatos: --"
+        candidatos.eachWithIndex { candidato, idx ->
+            println "${idx + 1} - ${candidato}"
+            println ""
+        }
+    }
+
+
     void listarEmpresas() {
-        println "\n- Empresas: -"
-        empresas.each { println it; println "" }
+        println "\n-- Empresas: --"
+        empresas.eachWithIndex { empresa, idx ->
+            println "${idx + 1} - ${empresa}"
+            println ""
+        }
     }
 
     void cadastrarCandidato() {
@@ -42,6 +57,19 @@ class Linketinder {
         println "\n✅Candidato cadastrado com sucesso!\n"
     }
 
+    void registrarCurtida(Pessoa origem, Pessoa destino) {
+        def curtida = new Curtida(origem: origem, destino: destino)
+        curtidas << curtida
+        println "${origem.nome} curtiu ${destino.nome}"
+
+        Curtida reciproca = curtidas.find { it.origem == destino && it.destino == origem }
+        if (reciproca) {
+            curtida.match = true
+            reciproca.match = true
+            println "💚Match entre ${origem.nome} e ${destino.nome}!"
+        }
+    }
+
     void cadastrarEmpresa() {
         def reader = System.in.newReader()
         print "Nome: "
@@ -69,21 +97,51 @@ class Linketinder {
         println "\n✅Empresa cadastrada com sucesso!\n"
     }
 
+    def curtirEmpresa(){
+        listarCandidatos()
+        print "Digite o índice do candidato que irá curtir: "
+        String opcaoC = System.in.newReader().readLine()
+        def origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        listarEmpresas()
+        print "Digite o índice da empresa que será curtida: "
+        String opcaoE = System.in.newReader().readLine()
+        def destino = empresas.get(Integer.parseInt(opcaoE) - 1)
+        registrarCurtida(origem, destino)
+    }
+
+    def curtirCandidato(){
+        listarEmpresas()
+        print "Digite o índice da empresa que irá curtir: "
+        String opcaoE = System.in.newReader().readLine()
+        def origem = empresas.get(Integer.parseInt(opcaoE) - 1)
+        listarCandidatos()
+        print "Digite o índice do candidato que será curtido: "
+        String opcaoC = System.in.newReader().readLine()
+        def destino = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        registrarCurtida(origem, destino)
+    }
+
     void menu() {
         while (true) {
             println "Menu Principal"
             println "1 - Listar Candidatos"
             println "2 - Listar Empresas"
-            println "3 - Cadastrar Candidato"
-            println "4 - Cadastrar Empresa"
+            println "3 - Listar Curtidas"
+            println "4 - Cadastrar Candidato"
+            println "5 - Cadastrar Empresa"
+            println "6 - Candidato Curtir Empresa"
+            println "7 - Empresa Curtir Candidato"
             println "0 - Sair"
             print "Escolha uma opção: "
             String opcao = System.in.newReader().readLine()
             switch(opcao) {
                 case "1": listarCandidatos(); break
                 case "2": listarEmpresas(); break
-                case "3": cadastrarCandidato(); break
-                case "4": cadastrarEmpresa(); break
+                case "3": listarCurtidas(); break
+                case "4": cadastrarCandidato(); break
+                case "5": cadastrarEmpresa(); break
+                case "6": curtirEmpresa(); break
+                case "7": curtirCandidato(); break
                 case "0": return
                 default: println "Opção inválida!"
             }
