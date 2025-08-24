@@ -30,6 +30,23 @@ class Linketinder {
         }
     }
 
+    void criarCandidato(String nome, String email, String cep, String descricao,
+                             String cpf, int idade, String estado, List<String> comps) {
+        def candidato = new Candidato(
+                nome: nome, email: email, cep: cep, descricao: descricao, cpf: cpf,
+                idade: idade, estado: estado, competencias: comps
+        )
+        candidatos << candidato
+    }
+
+    void criarEmpresa(String nome, String email, String cep, String descricao,
+                         String cnpj, String pais, String estado, List<String> comps) {
+        def empresa = new Empresa(
+                nome: nome, email: email, cep: cep, descricao: descricao, cnpj: cnpj,
+                pais: pais, estado: estado, competencias: comps
+        )
+        empresas << empresa
+    }
     void cadastrarCandidato() {
         def reader = System.in.newReader()
         print "Nome: "
@@ -48,12 +65,7 @@ class Linketinder {
         String estado = reader.readLine()
         print "Competências (separadas por vírgula): "
         List<String> comps = reader.readLine().split(",")*.trim()
-        def candidato = new Candidato(
-                nome: nome, email: email, cep: cep, descricao: descricao, cpf: cpf, idade: idade,
-                estado: estado, competencias: comps
-        )
-        candidatos << candidato
-
+        criarCandidato( nome, email, cep, descricao, cpf, idade, estado, comps)
         println "\n✅Candidato cadastrado com sucesso!\n"
     }
 
@@ -88,11 +100,7 @@ class Linketinder {
         String estado = reader.readLine()
         print "Competências esperadas (separadas por vírgula): "
         List<String> comps = reader.readLine().split(",")*.trim()
-        def empresa = new Empresa(
-                nome: nome, email: email, cep: cep, descricao: descricao, cnpj: cnpj, pais: pais,
-                estado: estado, competencias: comps
-        )
-        empresas << empresa
+        criarEmpresa(nome, email, cep, descricao, cnpj, pais, estado, comps)
 
         println "\n✅Empresa cadastrada com sucesso!\n"
     }
