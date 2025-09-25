@@ -1,0 +1,108 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+#fechar_modal_empresa,
+#fechar_modal_candidato {
+  cursor: pointer;
+}
+
+body {
+  background: #f0f2f5;
+  color: #333;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  background-image: url("assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+li {
+  background: #f9f9f9;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  transition: 0.2s;
+}
+
+#container_lista_candidatos,
+#container_lista_empresas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#lista_candidatos,
+#lista_empresas {
+    gap: 10px;
+}
+
+#container_grafico {
+  max-width: 600px;
+  max-height: 400px;
+  margin: 0 auto; 
+}
+
+.botoes_acoes {
+  background-color: white;
+  color: #0077ff;
+  border: 1px solid #0077ff;
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.botoes_acoes:hover {
+  background-color: #0077ff;
+}
+
+.botoes_acoes:hover > i {
+  color: white;
+}
+
+
+.botoes_acoes i {
+  color: #0077ff;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+dialog {
+  margin: auto;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  width: 30%;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+}
+
+form button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: auto;
+  width: 70%;
+  transition: 0.2s;
+  justify-self: center;
+}

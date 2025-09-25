@@ -49,7 +49,7 @@ class Linketinder {
     }
     void cadastrarCandidato() {
         def reader = System.in.newReader()
-        print "Nome: "
+        print "Nome: " //
         String nome = reader.readLine()
         print "Email: "
         String email = reader.readLine()
