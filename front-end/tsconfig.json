@@ -5,6 +5,7 @@
     "rootDir": "src",
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "strictNullChecks": true,
     // "outDir": "./dist",
 
     // Environment Settings

@@ -76,16 +76,29 @@
             name="nome_empresa"
             class="form-control"
             required
+            pattern="^[a-zA-Z]{2,}\s[a-zA-Z]{1,}(\s[a-zA-Z]{1,})+$"
           />
         </div>
         <div class="mb-2">
-          <label for="cep" class="form-label">CEP</label>
+          <label for="email_empresa" class="form-label">E-Mail</label>
           <input
             type="text"
-            id="cep"
-            name="cep"
+            id="email_empresa"
+            name="email_empresa"
             class="form-control"
             required
+            pattern="^[\w.+]+@[a-z]+.[a-zA-Z0-9]+(\.[a-z]{2,})+$"
+          />
+        </div>
+        <div class="mb-2">
+          <label for="cep_empresa" class="form-label">CEP</label>
+          <input
+            type="text"
+            id="cep_empresa"
+            name="cep_empresa"
+            class="form-control"
+            required
+            pattern="^\d{5}-?\d{3}$"
           />
         </div>
         <div class="mb-2">
@@ -105,6 +118,7 @@
             name="cnpj"
             class="form-control"
             required
+            pattern="^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$"
           />
         </div>
         <div class="mb-2">
@@ -128,7 +142,7 @@
           />
         </div>
         <div class="mb-2">
-          <label for="competencias" class="form-label">Competências</label>
+          <label for="competencias" class="form-label">Competências  (Separadas por vírgula)</label>
           <input
             type="text"
             id="competencias"
@@ -153,16 +167,53 @@
             name="nome"
             class="form-control"
             required
+            pattern="^[a-zA-Z]{2,}\s[a-zA-Z]{1,}(\s[a-zA-Z]{1,})+$"
+          />
+        </div>
+         <div class="mb-2">
+          <label for="email_candidato" class="form-label">E-Mail</label>
+          <input
+            type="text"
+            id="email_candidato"
+            name="email_candidato"
+            class="form-control"
+            required
+            pattern="^[\w.+]+@[a-z]+.[a-zA-Z0-9]+(\.[a-z]{2,})+$"
+          />
+        </div>
+        </div>
+         <div class="mb-2">
+          <label for="numero" class="form-label">Número</label>
+          <input
+            type="text"
+            id="numero"
+            name="numero"
+            class="form-control"
+            required
+            pattern="^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$"
+          />
+        </div>
+        </div>
+         <div class="mb-2">
+          <label for="linkedin" class="form-label">Perfil do Linkedin</label>
+          <input
+            type="text"
+            id="linkedin"
+            name="linkedin"
+            class="form-control"
+            required
+            pattern="^https?:\/\/(www\.)?linkedin\.com\/in\/[\-a-zA-Z0-9]+$"
           />
         </div>
         <div class="mb-2">
-          <label for="cep" class="form-label">CEP</label>
+          <label for="cep_candidato" class="form-label">CEP</label>
           <input
             type="text"
-            id="cep"
-            name="cep"
+            id="cep_candidato"
+            name="cep_candidato"
             class="form-control"
             required
+            pattern="^\d{5}-?\d{3}$"
           />
         </div>
         <div class="mb-2">
@@ -182,6 +233,7 @@
             name="cpf"
             class="form-control"
             required
+            pattern="^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$"
           />
         </div>
         <div class="mb-2">
@@ -214,7 +266,7 @@
           ></textarea>
         </div>
         <div class="mb-2">
-          <label for="competencias" class="form-label">Competências</label>
+          <label for="competencias" class="form-label">Competências (Separadas por vírgula)</label>
           <input
             type="text"
             id="competencias"

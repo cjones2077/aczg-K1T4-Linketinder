@@ -11,6 +11,8 @@ export class Candidato extends Usuario {
         public formacao: string,
         public cpf: string,
         public idade: number,
+        public numero: string,
+        public linkedin: string
     ) {
         super(nome, email, cep, descricao, estado, competencias);
     }
