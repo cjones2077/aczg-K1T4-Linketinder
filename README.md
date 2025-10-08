@@ -1,49 +1,85 @@
-# Banco de Dados: Sistema de Recrutamento
+# Linketinder - Projeto em Groovy
 
-Este projeto define um banco de dados relacional para o sistema de recrutamentos **Linketinder**, permitindo o gerenciamento de **candidatos, empresas, vagas e competências**.  
-O modelo foi projetado para armazenar informações de usuários, suas formações, vagas de emprego e as relações entre eles.
+## 📌 Sobre o Projeto
 
----
+O **Linketinder** é uma aplicação de console escrita em **Groovy** que simula uma plataforma de recrutamento, combinando funcionalidades de **LinkedIn** e **Tinder**.  
+O projeto permite cadastrar candidatos e empresas, listá-los e curtir perfis, simulando interações de uma plataforma de matchmaking profissional.
 
-## 🧩 Estrutura das Tabelas
+Além disso, o projeto conta com um **schema SQL** que define as tabelas para armazenar **candidatos, empresas, vagas, competências** e interações, permitindo que a aplicação seja integrada com uma base de dados PostgreSQL.
 
-- **candidatos**: contém informações pessoais e profissionais dos candidatos.  
-- **empresas**: armazena dados cadastrais das empresas.  
-- **vagas**: define as oportunidades de emprego oferecidas por cada empresa.  
-- **competencias**: lista de habilidades e competências.  
-- **paises**: lista de países, relacionados a candidatos e empresas.  
-- **candidatos_competencias**: relação N:N entre candidatos e competências.  
-- **empresas_competencias**: relação N:N entre empresas e competências.  
-- **empresa_curte_candidato**: relação entre empresas e candidatos curtidos.  
-- **candidato_curte_vaga**: relação entre candidatos e vagas curtidas.
+Este projeto foi desenvolvido como prática de **Programação Orientada a Objetos (POO)** utilizando Groovy.
 
 ---
 
-## 🧠 Modelo Conceitual
+## ⚙️ Funcionalidades
 
-Há um **diagrama DER** disponível em PDF neste projeto, que representa graficamente todas as entidades e seus relacionamentos.
-
----
-
-## 💾 Instruções de Uso
-
-1. Crie o banco de dados no PostgreSQL:
-   ```sql
-   CREATE DATABASE recrutamento;
-   ```
-
-2. Execute o script SQL com a estrutura:
-   ```bash
-   psql -U seu_usuario -d recrutamento -f commands.sql
-   ```
-
-3. Para popular as tabelas:
-   ```bash
-   psql -U seu_usuario -d recrutamento -f populate.sql
-   ```
+- Listar candidatos cadastrados
+- Listar empresas cadastradas
+- Cadastrar novos candidatos via console
+- Cadastrar novas empresas via console
+- Curtir candidatos ou vagas (empresas)
+- Rastrear curtidas enviadas
+- Integração com banco de dados PostgreSQL via schema SQL
 
 ---
 
-## 👥 Autores
+## 🛠 Tecnologias Utilizadas
 
-- Carlos Eduardo Paiva Locatelli  
+- **Groovy 3+**
+- **JDK 11+**
+- **PostgreSQL** 
+- Console/terminal como interface de usuário
+
+---
+
+## 🚀 Como Executar
+
+### 1. Instalar Groovy
+
+Se não estiver instalado, siga o comando correspondente ao seu sistema operacional:
+
+- **Arch Linux:**
+```bash
+sudo pacman -S groovy
+```
+
+- **Ubuntu/Debian:**
+```bash
+sudo apt install groovy
+```
+
+- Ou baixe a versão oficial: [https://groovy-lang.org/download.html](https://groovy-lang.org/download.html)
+
+---
+
+### 2. Compilar e Executar
+
+No diretório raiz do projeto, rode os seguintes comandos:
+
+```bash
+groovyc org/Entity/Candidato.groovy org/Entity/Empresa.groovy Linketinder.groovy
+groovy Linketinder
+```
+
+> Isso irá compilar as classes e executar a aplicação no console.
+
+---
+
+### 3. Usando o Banco de Dados
+
+1. Crie o banco no PostgreSQL:
+
+```sql
+CREATE DATABASE linketinder;
+```
+
+2. Execute o **schema SQL** (`schema.sql`) para criar as tabelas:
+
+```bash
+psql -U seu_usuario -d linketinder -f schema.sql
+```
+---
+
+## 👤 Autor
+
+**Carlos Eduardo Paiva Locatelli**
