@@ -1,3 +1,4 @@
+import app.Linketinder
 import spock.lang.Specification
 
 class LinketinderSpec extends Specification {

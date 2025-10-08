@@ -1,85 +1,65 @@
 # Linketinder - Projeto em Groovy
 
-## 📌 Sobre o Projeto
+## Sobre o Projeto
 
-O **Linketinder** é uma aplicação de console escrita em **Groovy** que simula uma plataforma de recrutamento, combinando funcionalidades de **LinkedIn** e **Tinder**.  
-O projeto permite cadastrar candidatos e empresas, listá-los e curtir perfis, simulando interações de uma plataforma de matchmaking profissional.
+O **Linketinder** é uma aplicação de console escrita em **Groovy** que
+simula uma plataforma de recrutamento semelhante ao LinkedIn + Tinder.\
+Permite cadastrar **candidatos** e **empresas**, além de listá-los e **curtir perfis**.
 
-Além disso, o projeto conta com um **schema SQL** que define as tabelas para armazenar **candidatos, empresas, vagas, competências** e interações, permitindo que a aplicação seja integrada com uma base de dados PostgreSQL.
+Este projeto foi desenvolvido como prática de programação orientada a
+objetos com Groovy.
 
-Este projeto foi desenvolvido como prática de **Programação Orientada a Objetos (POO)** utilizando Groovy.
+------------------------------------------------------------------------
 
----
+## Funcionalidades
 
-## ⚙️ Funcionalidades
+-   Listar candidatos cadastrados
+-   Listar empresas cadastradas
+-   Cadastrar novos candidatos via console
+-   Cadastrar novas empresas via console
+-   **Curtir candidatos ou vagas (empresas)**
+-   **Rastrear curtidas enviadas**
 
-- Listar candidatos cadastrados
-- Listar empresas cadastradas
-- Cadastrar novos candidatos via console
-- Cadastrar novas empresas via console
-- Curtir candidatos ou vagas (empresas)
-- Rastrear curtidas enviadas
-- Integração com banco de dados PostgreSQL via schema SQL
+------------------------------------------------------------------------
 
----
+## Tecnologias Utilizadas
 
-## 🛠 Tecnologias Utilizadas
+-   [Groovy](https://groovy-lang.org/) 3+
+-   JDK 11+
 
-- **Groovy 3+**
-- **JDK 11+**
-- **PostgreSQL** 
-- Console/terminal como interface de usuário
+------------------------------------------------------------------------
 
----
-
-## 🚀 Como Executar
+## Como Executar
 
 ### 1. Instalar Groovy
 
-Se não estiver instalado, siga o comando correspondente ao seu sistema operacional:
+Se não tiver instalado, no **Linux (Arch)** rode:
 
-- **Arch Linux:**
-```bash
+``` bash
 sudo pacman -S groovy
 ```
 
-- **Ubuntu/Debian:**
-```bash
+No **Ubuntu/Debian**:
+
+``` bash
 sudo apt install groovy
 ```
 
-- Ou baixe a versão oficial: [https://groovy-lang.org/download.html](https://groovy-lang.org/download.html)
+Ou baixe no site oficial: <https://groovy-lang.org/download.html>
 
----
+------------------------------------------------------------------------
 
 ### 2. Compilar e Executar
 
-No diretório raiz do projeto, rode os seguintes comandos:
+No diretório raiz do projeto, rode:
 
-```bash
+``` bash
 groovyc org/Entity/Candidato.groovy org/Entity/Empresa.groovy Linketinder.groovy
 groovy Linketinder
 ```
 
-> Isso irá compilar as classes e executar a aplicação no console.
+------------------------------------------------------------------------
 
----
+## Autor
 
-### 3. Usando o Banco de Dados
-
-1. Crie o banco no PostgreSQL:
-
-```sql
-CREATE DATABASE linketinder;
-```
-
-2. Execute o **schema SQL** (`schema.sql`) para criar as tabelas:
-
-```bash
-psql -U seu_usuario -d linketinder -f schema.sql
-```
----
-
-## 👤 Autor
-
-**Carlos Eduardo Paiva Locatelli**
+-   Participante: **Carlos Eduardo Paiva Locatelli**
