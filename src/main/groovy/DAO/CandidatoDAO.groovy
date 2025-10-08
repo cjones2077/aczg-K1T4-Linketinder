@@ -26,7 +26,7 @@ class CandidatoDAO {
         comando.close()
     }
 
-    static List listarTodosCandidatos() {
+    static List<Candidato> listarTodosCandidatos() {
         String sql = "SELECT * FROM candidatos"
         PreparedStatement comando = DBConnection.conexao.prepareStatement(sql)
         ResultSet rs = comando.executeQuery()
@@ -37,11 +37,12 @@ class CandidatoDAO {
                     nome: rs.getString("nome"),
                     sobrenome: rs.getString("sobrenome"),
                     email: rs.getString("email"),
-                    dataNascimento: rs.getDate("data_nascimento"),
+                    data_nascimento: rs.getDate("data_nascimento"),
                     formacao: rs.getString("formacao"),
                     pais: rs.getString("pais"),
                     cep: rs.getString("cep"),
-                    descricao: rs.getString("descricao")
+                    descricao: rs.getString("descricao"),
+                    senha: rs.getString("senha")
             ]
         }
         rs.close()

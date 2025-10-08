@@ -111,11 +111,50 @@ class Linketinder {
         println "\n✅Empresa cadastrada com sucesso!\n"
     }
 
+    void atualizarCandidato() {
+        def reader = System.in.newReader()
+        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
+        listarCandidatos()
+        print "Digite o índice do candidato que irá ser atualizado: "
+        String opcaoC = reader.readLine()
+        Candidato candidato = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        if (!candidato) { println "Candidato não encontrado!"; return }
+
+        print "Nome [${candidato.nome}]: "; String nome = reader.readLine(); if (nome) candidato.nome = nome
+        print "Sobrenome [${candidato.sobrenome}]: "; String sobrenome = reader.readLine(); if (sobrenome) candidato.sobrenome = sobrenome
+        print "Email [${candidato.email}]: "; String email = reader.readLine(); if (email) candidato.email = email
+        print "Data de nascimento (yyyy-mm-dd) [${candidato.data_nascimento}]: "; String data = reader.readLine(); if (data) candidato.data_nascimento = Date.parse("yyyy-MM-dd", data)
+        print "Formação [${candidato.formacao}]: "; String formacao = reader.readLine(); if (formacao) candidato.formacao = formacao
+        print "País [${candidato.pais}]: "; String pais = reader.readLine(); if (pais) candidato.pais = pais
+        print "CEP [${candidato.cep}]: "; String cep = reader.readLine(); if (cep) candidato.cep = cep
+        print "Descrição [${candidato.descricao}]: "; String descricao = reader.readLine(); if (descricao) candidato.descricao = descricao
+        print "Senha [${candidato.senha}]: "; String senha = reader.readLine(); if (senha) candidato.senha = senha
+
+        candidatoDAO.atualizarCandidato(candidato)
+        println "\n✅Candidato atualizado com sucesso!\n"
+    }
+
+    void deletarCandidato() {
+        def reader = System.in.newReader()
+        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
+        listarCandidatos()
+        print "Digite o índice do candidato que irá ser deletado: "
+        String opcaoC = reader.readLine()
+        Candidato candidato = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        if (!candidato) { println "Candidato não encontrado!"; return }
+        def cpfCandidato = candidato.cpf
+        candidatoDAO.deletarCandidato(cpfCandidato)
+    }
+
     def curtirEmpresa(){
+        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
+        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+
         listarCandidatos()
         print "Digite o índice do candidato que irá curtir: "
         String opcaoC = System.in.newReader().readLine()
         def origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
+
         listarEmpresas()
         print "Digite o índice da empresa que será curtida: "
         String opcaoE = System.in.newReader().readLine()
@@ -124,10 +163,14 @@ class Linketinder {
     }
 
     def curtirCandidato(){
+        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
+        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+
         listarEmpresas()
         print "Digite o índice da empresa que irá curtir: "
         String opcaoE = System.in.newReader().readLine()
         def origem = empresas.get(Integer.parseInt(opcaoE) - 1)
+
         listarCandidatos()
         print "Digite o índice do candidato que será curtido: "
         String opcaoC = System.in.newReader().readLine()
@@ -145,6 +188,10 @@ class Linketinder {
             println "5 - Cadastrar Empresa"
             println "6 - Candidato Curtir Empresa"
             println "7 - Empresa Curtir Candidato"
+            println "8 - Atualizar Candidato"
+            println "9 - Atualizar Empresa"
+            println "10 - Deletar Candidato"
+            println "11 - Deletar Empresa"
             println "0 - Sair"
             print "Escolha uma opção: "
             String opcao = System.in.newReader().readLine()
@@ -156,6 +203,8 @@ class Linketinder {
                 case "5": cadastrarEmpresa(); break
                 case "6": curtirEmpresa(); break
                 case "7": curtirCandidato(); break
+                case "8": atualizarCandidato(); break
+                case "10": deletarCandidato(); break
                 case "0": connection.close(); return
                 default: println "Opção inválida!"
             }
