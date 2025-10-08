@@ -1,9 +1,3 @@
-CREATE TABLE paises (
-  id SERIAL PRIMARY KEY,
-  codigo CHAR(4),
-  nome VARCHAR(100)
-);
-
 CREATE TABLE competencias (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100)
