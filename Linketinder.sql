@@ -27,7 +27,7 @@ CREATE TABLE empresas (
   nome VARCHAR(150),
   email VARCHAR(150),
   data_criacao DATE,
-  id_pais INT REFERENCES paises(id),
+  pais VARCHAR(20),
   cep VARCHAR(10),
   descricao TEXT,
   senha VARCHAR(255)
