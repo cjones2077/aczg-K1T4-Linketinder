@@ -46,8 +46,8 @@ CREATE TABLE candidatos_competencias (
   id_competencia INT REFERENCES competencias(id)
 );
 
-CREATE TABLE empresas_competencias (
-  cnpj_empresa VARCHAR(18) REFERENCES empresas(cnpj),
+CREATE TABLE vagas_competencias (
+  id_vaga int REFERENCES vagas(id),
   id_competencia INT REFERENCES competencias(id)
 );
 
