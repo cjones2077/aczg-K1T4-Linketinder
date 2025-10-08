@@ -80,5 +80,3 @@ VALUES
 ('11.222.333/0001-22', 'HealthPlus', 'contato@healthplus.com', '2012-10-20', 1, '20031-050', 'Clínica digital focada em telemedicina e análise de dados de saúde.', 'admin789'),
 ('44.555.666/0001-33', 'EcoBuild Engenharia', 'contato@ecobuild.com', '2016-12-05', 1, '88015-600', 'Empresa de engenharia civil sustentável.', 'admin321'),
 ('77.888.999/0001-44', 'ByteWave', 'suporte@bytewave.com', '2020-05-25', 1, '30120-040', 'Desenvolvedora de softwares corporativos e soluções em nuvem.', 'admin654');
-
-INSERT INTO paises (codigo, nome) VALUES ('BR', 'Brasil');
