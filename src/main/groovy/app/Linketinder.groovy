@@ -12,7 +12,6 @@ import java.sql.Connection
 
 class Linketinder {
     List<Curtida> curtidas = []
-    Connection connection = DBConnection.conectar()
     CandidatoDAO candidatoDAO = new CandidatoDAO()
     EmpresaDAO empresaDAO = new EmpresaDAO()
 
@@ -134,6 +133,30 @@ class Linketinder {
         println "\nCandidato atualizado com sucesso!\n"
     }
 
+    void atualizarEmpresa() {
+        def reader = System.in.newReader()
+        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+        listarEmpresas()
+        print "Digite o índice da empresa que irá ser atualizada: "
+        String opcaoE = reader.readLine()
+        Empresa empresa = empresas.get(Integer.parseInt(opcaoE) - 1)
+        if (!empresa) {
+            println "Empresa não encontrada!"
+            return
+        }
+
+        print "Nome [${empresa.nome}]: "; String nome = reader.readLine(); if (nome) empresa.nome = nome
+        print "Email [${empresa.email}]: "; String email = reader.readLine(); if (email) empresa.email = email
+        print "Data de criação (yyyy-mm-dd) [${empresa.data_criacao}]: "; String data = reader.readLine(); if (data) empresa.data_criacao = Date.parse("yyyy-MM-dd", data)
+        print "País [${empresa.pais}]: "; String pais = reader.readLine(); if (pais) empresa.pais = pais
+        print "CEP [${empresa.cep}]: "; String cep = reader.readLine(); if (cep) empresa.cep = cep
+        print "Descrição [${empresa.descricao}]: "; String descricao = reader.readLine(); if (descricao) empresa.descricao = descricao
+        print "Senha [${empresa.senha}]: "; String senha = reader.readLine(); if (senha) empresa.senha = senha
+
+        empresaDAO.atualizarEmpresa(empresa)
+        println "\nEmpresa atualizada com sucesso!\n"
+    }
+
     void deletarCandidato() {
         def reader = System.in.newReader()
         List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
@@ -144,6 +167,18 @@ class Linketinder {
         if (!candidato) { println "Candidato não encontrado!"; return }
         def cpfCandidato = candidato.cpf
         candidatoDAO.deletarCandidato(cpfCandidato)
+    }
+
+    void deletarEmpresa() {
+        def reader = System.in.newReader()
+        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+        listarEmpresas()
+        print "Digite o índice da empresa que irá ser deletada: "
+        String opcaoE = reader.readLine()
+        Empresa empresa = empresas.get(Integer.parseInt(opcaoE) - 1)
+        if (!empresa) { println "Empresa não encontrada!"; return }
+        def cnpjEmpresa = empresa.cnpj
+        empresaDAO.deletarEmpresa(cnpjEmpresa)
     }
 
     def curtirEmpresa(){
@@ -204,8 +239,10 @@ class Linketinder {
                 case "6": curtirEmpresa(); break
                 case "7": curtirCandidato(); break
                 case "8": atualizarCandidato(); break
+                case "9": atualizarEmpresa(); break
                 case "10": deletarCandidato(); break
-                case "0": connection.close(); return
+                case "11": deletarEmpresa(); break
+                case "0": DBConnection.fechaConexao(); return
                 default: println "Opção inválida!"
             }
         }
