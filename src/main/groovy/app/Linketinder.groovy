@@ -1,6 +1,7 @@
 package app
 
 import DAO.CandidatoDAO
+import DAO.EmpresaDAO
 import Persistence.DBConnection
 import org.Entity.Candidato
 import org.Entity.Curtida
@@ -10,11 +11,11 @@ import org.Entity.Pessoa
 import java.sql.Connection
 
 class Linketinder {
-    List<Candidato> candidatos = []
-    List<Empresa> empresas = []
     List<Curtida> curtidas = []
     Connection connection = DBConnection.conectar()
     CandidatoDAO candidatoDAO = new CandidatoDAO()
+    EmpresaDAO empresaDAO = new EmpresaDAO()
+
     void listarCurtidas() {
         println "\n-- Histórico de Curtidas --"
         curtidas.each { println it }
@@ -22,17 +23,15 @@ class Linketinder {
 
     void listarCandidatos() {
         println "\n-- Candidatos --"
-        candidatoDAO.listarTodos().eachWithIndex { c, idx ->
+        candidatoDAO.listarTodosCandidatos().eachWithIndex { c, idx ->
             println "${idx+1} - ${c.nome} ${c.sobrenome} | CPF: ${c.cpf} | Email: ${c.email}"
         }
     }
 
-
     void listarEmpresas() {
-        println "\n-- Empresas: --"
-        empresas.eachWithIndex { empresa, idx ->
-            println "${idx + 1} - ${empresa}"
-            println ""
+        println "\n-- Empresas --"
+        empresaDAO.listarTodasEmpresas().eachWithIndex { c, idx ->
+            println "${idx+1} - ${c.nome} | CNPJ: ${c.cnpj} | Email: ${c.email}"
         }
     }
 
@@ -42,7 +41,7 @@ class Linketinder {
                 nome: nome, email: email, cep: cep, descricao: descricao, cpf: cpf,
                 idade: idade, estado: estado, competencias: comps
         )
-        candidatos << candidato
+        candidatoDAO.criarCandidato(candidato)
     }
 
     void criarEmpresa(String nome, String email, String cep, String descricao,
@@ -51,7 +50,7 @@ class Linketinder {
                 nome: nome, email: email, cep: cep, descricao: descricao, cnpj: cnpj,
                 pais: pais, estado: estado, competencias: comps
         )
-        empresas << empresa
+        empresaDAO.criarEmpresa(empresa)
     }
 
     void cadastrarCandidato() {

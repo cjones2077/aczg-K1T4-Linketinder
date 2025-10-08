@@ -4,7 +4,7 @@ class Empresa extends Pessoa {
     String cnpj
     String pais
     String estado
-    Date data_nascimento
+    Date data_criacao
     List<String> competencias = []
 
     @Override

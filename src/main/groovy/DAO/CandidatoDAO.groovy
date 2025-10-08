@@ -7,7 +7,7 @@ import java.sql.ResultSet
 
 
 class CandidatoDAO {
-    static void criar(Candidato candidato) {
+    static void criarCandidato(Candidato candidato) {
         String sql = """INSERT INTO candidatos
             (cpf, nome, sobrenome, email, data_nascimento, formacao, pais, cep, descricao, senha)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
@@ -26,7 +26,7 @@ class CandidatoDAO {
         comando.close()
     }
 
-    static List listarTodos() {
+    static List listarTodosCandidatos() {
         String sql = "SELECT * FROM candidatos"
         PreparedStatement comando = DBConnection.conexao.prepareStatement(sql)
         ResultSet rs = comando.executeQuery()
