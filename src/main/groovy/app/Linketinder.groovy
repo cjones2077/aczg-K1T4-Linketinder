@@ -72,7 +72,7 @@ class Linketinder {
         print "Competências (separadas por vírgula): "
         List<String> comps = reader.readLine().split(",")*.trim()
         criarCandidato( nome, email, cep, descricao, cpf, idade, estado, comps)
-        println "\n✅Candidato cadastrado com sucesso!\n"
+        println "\nCandidato cadastrado com sucesso!\n"
     }
 
     void registrarCurtida(Pessoa origem, Pessoa destino) {
@@ -84,7 +84,7 @@ class Linketinder {
         if (reciproca) {
             curtida.match = true
             reciproca.match = true
-            println "💚Match entre ${origem.nome} e ${destino.nome}!"
+            println "Match entre ${origem.nome} e ${destino.nome}!"
         }
     }
 
@@ -108,7 +108,7 @@ class Linketinder {
         List<String> comps = reader.readLine().split(",")*.trim()
         criarEmpresa(nome, email, cep, descricao, cnpj, pais, estado, comps)
 
-        println "\n✅Empresa cadastrada com sucesso!\n"
+        println "\nEmpresa cadastrada com sucesso!\n"
     }
 
     void atualizarCandidato() {
@@ -131,7 +131,7 @@ class Linketinder {
         print "Senha [${candidato.senha}]: "; String senha = reader.readLine(); if (senha) candidato.senha = senha
 
         candidatoDAO.atualizarCandidato(candidato)
-        println "\n✅Candidato atualizado com sucesso!\n"
+        println "\nCandidato atualizado com sucesso!\n"
     }
 
     void deletarCandidato() {
