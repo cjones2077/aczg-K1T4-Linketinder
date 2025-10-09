@@ -2,7 +2,6 @@ package app
 
 import DAO.CandidatoDAO
 import DAO.EmpresaDAO
-import Persistence.DBConnection
 import org.Entity.Candidato
 import org.Entity.Curtida
 import org.Entity.Empresa
@@ -71,7 +70,9 @@ class Linketinder {
     }
 
     void menu() {
-        while (true) {
+        def reader = System.in.newReader()
+        def sair = false
+        while (!sair) {
             println "\nMenu Principal"
             println "1 - Listar Candidatos"
             println "2 - Listar Empresas"
@@ -95,7 +96,8 @@ class Linketinder {
             println "0  - Sair"
             print "Escolha uma opção: "
 
-            String opcao = System.in.newReader().readLine()
+            def opcao = reader.readLine()?.trim()
+            println opcao
             switch (opcao) {
                 case "1": candidatoController.listarCandidatos(); break
                 case "2": empresaController.listarEmpresas(); break
@@ -116,8 +118,8 @@ class Linketinder {
                 case "17": competenciaController.cadastrarCompetencia(); break
                 case "18": competenciaController.atualizarCompetencia(); break
                 case "19": competenciaController.deletarCompetencia(); break
-                case "0": DBConnection.fechaConexao(); return
-                default: println "Opção inválida!"
+                case "0": sair = true; break
+                default: println "Opção inválida!"; break
             }
         }
     }

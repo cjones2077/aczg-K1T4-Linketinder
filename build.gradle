@@ -10,9 +10,13 @@ repositories {
     mavenCentral()
 }
 
+run {
+    standardInput = System.in
+}
+
 dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.17'
     implementation 'org.postgresql:postgresql:42.6.0'
-    implementation localGroovy()
     testImplementation 'org.spockframework:spock-core:2.4-M6-groovy-3.0'
 }
 
@@ -22,4 +26,12 @@ test {
 
 application {
     mainClass = 'app.Application'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get()
+        )
+    }
 }

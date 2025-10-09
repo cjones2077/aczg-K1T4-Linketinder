@@ -4,7 +4,13 @@ package app
 import Persistence.DBConnection
 
 static void main(String[] args) {
-    def linketinder = new Linketinder()
-    DBConnection.conectar()
-    linketinder.menu()
+    try{
+        def linketinder = new Linketinder()
+        DBConnection.conectar()
+        linketinder.menu()
+        DBConnection.fechaConexao()
+    } catch (Exception e){
+        e.printStackTrace()
+    }
+
 }
