@@ -5,7 +5,6 @@ class Empresa extends Pessoa {
     String pais
     String estado
     Date data_criacao
-    List<String> competencias = []
 
     @Override
     String toString() {

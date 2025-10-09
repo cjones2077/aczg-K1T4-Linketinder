@@ -22,10 +22,9 @@ class CandidatoController {
         print "CPF: "; String cpf = reader.readLine()
         print "Idade: "; int idade = reader.readLine().toInteger()
         print "Estado: "; String estado = reader.readLine()
-        print "Competências (separadas por vírgula): "; List<String> comps = reader.readLine().split(",")*.trim()
 
         def candidato = new Candidato(nome: nome, email: email, cep: cep, descricao: descricao,
-                cpf: cpf, idade: idade, estado: estado, competencias: comps)
+                cpf: cpf, idade: idade, estado: estado)
         candidatoDAO.criarCandidato(candidato)
         println "\nCandidato cadastrado com sucesso!\n"
     }

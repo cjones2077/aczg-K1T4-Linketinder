@@ -7,7 +7,6 @@ class Candidato extends Pessoa {
     Date data_nascimento
     String formacao
     String sobrenome
-    List<String> competencias = []
 
     @Override
     String toString() {
