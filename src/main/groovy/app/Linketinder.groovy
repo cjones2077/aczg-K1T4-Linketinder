@@ -7,72 +7,23 @@ import org.Entity.Candidato
 import org.Entity.Curtida
 import org.Entity.Empresa
 import org.Entity.Pessoa
+import controllers.*
 
-import java.sql.Connection
 
 class Linketinder {
     List<Curtida> curtidas = []
     CandidatoDAO candidatoDAO = new CandidatoDAO()
     EmpresaDAO empresaDAO = new EmpresaDAO()
+    CandidatoController candidatoController = new CandidatoController()
+    EmpresaController empresaController = new EmpresaController()
+    VagaController vagaController = new VagaController()
+    CompetenciaController competenciaController = new CompetenciaController()
 
     void listarCurtidas() {
         println "\n-- Histórico de Curtidas --"
         curtidas.each { println it }
     }
 
-    void listarCandidatos() {
-        println "\n-- Candidatos --"
-        candidatoDAO.listarTodosCandidatos().eachWithIndex { c, idx ->
-            println "${idx+1} - ${c.nome} ${c.sobrenome} | CPF: ${c.cpf} | Email: ${c.email}"
-        }
-    }
-
-    void listarEmpresas() {
-        println "\n-- Empresas --"
-        empresaDAO.listarTodasEmpresas().eachWithIndex { c, idx ->
-            println "${idx+1} - ${c.nome} | CNPJ: ${c.cnpj} | Email: ${c.email}"
-        }
-    }
-
-    void criarCandidato(String nome, String email, String cep, String descricao,
-                             String cpf, int idade, String estado, List<String> comps) {
-        def candidato = new Candidato(
-                nome: nome, email: email, cep: cep, descricao: descricao, cpf: cpf,
-                idade: idade, estado: estado, competencias: comps
-        )
-        candidatoDAO.criarCandidato(candidato)
-    }
-
-    void criarEmpresa(String nome, String email, String cep, String descricao,
-                         String cnpj, String pais, String estado, List<String> comps) {
-        def empresa = new Empresa(
-                nome: nome, email: email, cep: cep, descricao: descricao, cnpj: cnpj,
-                pais: pais, estado: estado, competencias: comps
-        )
-        empresaDAO.criarEmpresa(empresa)
-    }
-
-    void cadastrarCandidato() {
-        def reader = System.in.newReader()
-        print "Nome: " //
-        String nome = reader.readLine()
-        print "Email: "
-        String email = reader.readLine()
-        print "CEP: "
-        String cep = reader.readLine()
-        print "Descrição: "
-        String descricao = reader.readLine()
-        print "CPF: "
-        String cpf = reader.readLine()
-        print "Idade: "
-        int idade = reader.readLine().toInteger()
-        print "Estado: "
-        String estado = reader.readLine()
-        print "Competências (separadas por vírgula): "
-        List<String> comps = reader.readLine().split(",")*.trim()
-        criarCandidato( nome, email, cep, descricao, cpf, idade, estado, comps)
-        println "\nCandidato cadastrado com sucesso!\n"
-    }
 
     void registrarCurtida(Pessoa origem, Pessoa destino) {
         def curtida = new Curtida(origem: origem, destino: destino)
@@ -87,101 +38,7 @@ class Linketinder {
         }
     }
 
-    void cadastrarEmpresa() {
-        def reader = System.in.newReader()
-        print "Nome: "
-        String nome = reader.readLine()
-        print "Email: "
-        String email = reader.readLine()
-        print "CEP: "
-        String cep = reader.readLine()
-        print "Descrição: "
-        String descricao = reader.readLine()
-        print "CNPJ: "
-        String cnpj = reader.readLine()
-        print "País: "
-        String pais = reader.readLine()
-        print "Estado: "
-        String estado = reader.readLine()
-        print "Competências esperadas (separadas por vírgula): "
-        List<String> comps = reader.readLine().split(",")*.trim()
-        criarEmpresa(nome, email, cep, descricao, cnpj, pais, estado, comps)
-
-        println "\nEmpresa cadastrada com sucesso!\n"
-    }
-
-    void atualizarCandidato() {
-        def reader = System.in.newReader()
-        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
-        listarCandidatos()
-        print "Digite o índice do candidato que irá ser atualizado: "
-        String opcaoC = reader.readLine()
-        Candidato candidato = candidatos.get(Integer.parseInt(opcaoC) - 1)
-        if (!candidato) { println "Candidato não encontrado!"; return }
-
-        print "Nome [${candidato.nome}]: "; String nome = reader.readLine(); if (nome) candidato.nome = nome
-        print "Sobrenome [${candidato.sobrenome}]: "; String sobrenome = reader.readLine(); if (sobrenome) candidato.sobrenome = sobrenome
-        print "Email [${candidato.email}]: "; String email = reader.readLine(); if (email) candidato.email = email
-        print "Data de nascimento (yyyy-mm-dd) [${candidato.data_nascimento}]: "; String data = reader.readLine(); if (data) candidato.data_nascimento = Date.parse("yyyy-MM-dd", data)
-        print "Formação [${candidato.formacao}]: "; String formacao = reader.readLine(); if (formacao) candidato.formacao = formacao
-        print "País [${candidato.pais}]: "; String pais = reader.readLine(); if (pais) candidato.pais = pais
-        print "CEP [${candidato.cep}]: "; String cep = reader.readLine(); if (cep) candidato.cep = cep
-        print "Descrição [${candidato.descricao}]: "; String descricao = reader.readLine(); if (descricao) candidato.descricao = descricao
-        print "Senha [${candidato.senha}]: "; String senha = reader.readLine(); if (senha) candidato.senha = senha
-
-        candidatoDAO.atualizarCandidato(candidato)
-        println "\nCandidato atualizado com sucesso!\n"
-    }
-
-    void atualizarEmpresa() {
-        def reader = System.in.newReader()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
-        listarEmpresas()
-        print "Digite o índice da empresa que irá ser atualizada: "
-        String opcaoE = reader.readLine()
-        Empresa empresa = empresas.get(Integer.parseInt(opcaoE) - 1)
-        if (!empresa) {
-            println "Empresa não encontrada!"
-            return
-        }
-
-        print "Nome [${empresa.nome}]: "; String nome = reader.readLine(); if (nome) empresa.nome = nome
-        print "Email [${empresa.email}]: "; String email = reader.readLine(); if (email) empresa.email = email
-        print "Data de criação (yyyy-mm-dd) [${empresa.data_criacao}]: "; String data = reader.readLine(); if (data) empresa.data_criacao = Date.parse("yyyy-MM-dd", data)
-        print "País [${empresa.pais}]: "; String pais = reader.readLine(); if (pais) empresa.pais = pais
-        print "CEP [${empresa.cep}]: "; String cep = reader.readLine(); if (cep) empresa.cep = cep
-        print "Descrição [${empresa.descricao}]: "; String descricao = reader.readLine(); if (descricao) empresa.descricao = descricao
-        print "Senha [${empresa.senha}]: "; String senha = reader.readLine(); if (senha) empresa.senha = senha
-
-        empresaDAO.atualizarEmpresa(empresa)
-        println "\nEmpresa atualizada com sucesso!\n"
-    }
-
-    void deletarCandidato() {
-        def reader = System.in.newReader()
-        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
-        listarCandidatos()
-        print "Digite o índice do candidato que irá ser deletado: "
-        String opcaoC = reader.readLine()
-        Candidato candidato = candidatos.get(Integer.parseInt(opcaoC) - 1)
-        if (!candidato) { println "Candidato não encontrado!"; return }
-        def cpfCandidato = candidato.cpf
-        candidatoDAO.deletarCandidato(cpfCandidato)
-    }
-
-    void deletarEmpresa() {
-        def reader = System.in.newReader()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
-        listarEmpresas()
-        print "Digite o índice da empresa que irá ser deletada: "
-        String opcaoE = reader.readLine()
-        Empresa empresa = empresas.get(Integer.parseInt(opcaoE) - 1)
-        if (!empresa) { println "Empresa não encontrada!"; return }
-        def cnpjEmpresa = empresa.cnpj
-        empresaDAO.deletarEmpresa(cnpjEmpresa)
-    }
-
-    def curtirEmpresa(){
+    def curtirEmpresa() {
         List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
         List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
 
@@ -197,7 +54,7 @@ class Linketinder {
         registrarCurtida(origem, destino)
     }
 
-    def curtirCandidato(){
+    def curtirCandidato() {
         List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
         List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
 
@@ -215,7 +72,7 @@ class Linketinder {
 
     void menu() {
         while (true) {
-            println "Menu Principal"
+            println "\nMenu Principal"
             println "1 - Listar Candidatos"
             println "2 - Listar Empresas"
             println "3 - Listar Curtidas"
@@ -227,21 +84,38 @@ class Linketinder {
             println "9 - Atualizar Empresa"
             println "10 - Deletar Candidato"
             println "11 - Deletar Empresa"
-            println "0 - Sair"
+            println "12 - Listar Vagas"
+            println "13 - Cadastrar Vaga"
+            println "14 - Atualizar Vaga"
+            println "15 - Deletar Vaga"
+            println "16 - Listar Competências"
+            println "17 - Cadastrar Competência"
+            println "18 - Atualizar Competência"
+            println "19 - Deletar Competência"
+            println "0  - Sair"
             print "Escolha uma opção: "
+
             String opcao = System.in.newReader().readLine()
-            switch(opcao) {
-                case "1": listarCandidatos(); break
-                case "2": listarEmpresas(); break
+            switch (opcao) {
+                case "1": candidatoController.listarCandidatos(); break
+                case "2": empresaController.listarEmpresas(); break
                 case "3": listarCurtidas(); break
-                case "4": cadastrarCandidato(); break
-                case "5": cadastrarEmpresa(); break
+                case "4": candidatoController.cadastrarCandidato(); break
+                case "5": empresaController.cadastrarEmpresa(); break
                 case "6": curtirEmpresa(); break
                 case "7": curtirCandidato(); break
-                case "8": atualizarCandidato(); break
-                case "9": atualizarEmpresa(); break
-                case "10": deletarCandidato(); break
-                case "11": deletarEmpresa(); break
+                case "8": candidatoController.atualizarCandidato(); break
+                case "9": empresaController.atualizarEmpresa(); break
+                case "10": candidatoController.deletarCandidato(); break
+                case "11": empresaController.deletarEmpresa(); break
+                case "12": vagaController.listarVagas(); break
+                case "13": vagaController.cadastrarVaga(); break
+                case "14": vagaController.atualizarVaga(); break
+                case "15": vagaController.deletarVaga(); break
+                case "16": competenciaController.listarCompetencias(); break
+                case "17": competenciaController.cadastrarCompetencia(); break
+                case "18": competenciaController.atualizarCompetencia(); break
+                case "19": competenciaController.deletarCompetencia(); break
                 case "0": DBConnection.fechaConexao(); return
                 default: println "Opção inválida!"
             }
