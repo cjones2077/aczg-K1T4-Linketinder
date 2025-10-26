@@ -2,43 +2,48 @@ package controllers
 
 import DAO.CompetenciaDAO
 import org.Entity.Competencia
+import utils.ConsoleInputReader
 
 class CompetenciaController {
-    CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+    private final CompetenciaDAO competenciaDAO
+    private final ConsoleInputReader consoleInputReader
+
+    CompetenciaController(CompetenciaDAO competenciaDAO, ConsoleInputReader consoleInputReader) {
+        this.competenciaDAO = competenciaDAO
+        this.consoleInputReader = consoleInputReader
+    }
+
     void cadastrarCompetencia() {
-        def reader = System.in.newReader()
-        print "Nome da competência: "; String nome = reader.readLine()
-        def comp = new Competencia(nome: nome)
+        String nome = consoleInputReader.readLine("Nome da competência: ")
+        Competencia comp = new Competencia(nome: nome)
         competenciaDAO.criarCompetencia(comp)
         println "Competência cadastrada!"
     }
 
     void listarCompetencias() {
         println "\n-- Competências --"
-        competenciaDAO.listarTodasCompetencias().eachWithIndex { c, idx ->
+        competenciaDAO.buscarCompetencias().eachWithIndex { c, idx ->
             println "${idx + 1} - ${c.nome} | ID: ${c.id}"
         }
     }
 
     void atualizarCompetencia() {
-        def reader = System.in.newReader()
-        List<Competencia> comps = competenciaDAO.listarTodasCompetencias()
+        List<Competencia> comps = competenciaDAO.buscarCompetencias()
         listarCompetencias()
-        print "Escolha a competência a atualizar (índice): "
-        int idx = reader.readLine().toInteger() - 1
+        int idx = consoleInputReader.readLine("Escolha a competência a atualizar (índice): ").toInteger() - 1
         Competencia comp = comps.get(idx)
 
-        print "Nome [${comp.nome}]: "; String nome = reader.readLine(); if (nome) comp.nome = nome
+        String nome = consoleInputReader.readLine("Nome [${comp.nome}]: ")
+        if (nome) comp.nome = nome
+
         competenciaDAO.atualizarCompetencia(comp)
         println "Competência atualizada!"
     }
 
     void deletarCompetencia() {
-        def reader = System.in.newReader()
-        List<Competencia> comps = competenciaDAO.listarTodasCompetencias()
+        List<Competencia> comps = competenciaDAO.buscarCompetencias()
         listarCompetencias()
-        print "Escolha a competência a deletar (índice): "
-        int idx = reader.readLine().toInteger() - 1
+        int idx = consoleInputReader.readLine("Escolha a competência a deletar (índice): ").toInteger() - 1
         Competencia comp = comps.get(idx)
         competenciaDAO.deletarCompetencia(comp.id)
         println "Competência deletada!"

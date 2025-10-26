@@ -1,22 +1,47 @@
 package app
 
 import DAO.CandidatoDAO
+import DAO.CompetenciaDAO
 import DAO.EmpresaDAO
+import DAO.VagaDAO
+import Persistence.DBConnection
 import org.Entity.Candidato
 import org.Entity.Curtida
 import org.Entity.Empresa
 import org.Entity.Pessoa
 import controllers.*
+import utils.ConsoleInputReader
 
 
 class Linketinder {
+
+    CandidatoDAO candidatoDAO = new CandidatoDAO(DBConnection.conexao)
+    EmpresaDAO empresaDAO = new EmpresaDAO(DBConnection.conexao)
+
+    CompetenciaDAO competenciaDAO = new CompetenciaDAO(DBConnection.conexao)
+    VagaDAO vagaDAO = new VagaDAO(DBConnection.conexao)
+
+    ConsoleInputReader consoleInputReader = new ConsoleInputReader()
+
+    EmpresaController empresaController = new EmpresaController(empresaDAO, consoleInputReader)
+    CompetenciaController competenciaController = new CompetenciaController(competenciaDAO, consoleInputReader)
+    CandidatoController candidatoController = new CandidatoController(
+            candidatoDAO,
+            competenciaDAO,
+            competenciaController,
+            consoleInputReader
+    )
+    VagaController vagaController = new VagaController(
+            vagaDAO,
+            empresaDAO,
+            empresaController,
+            competenciaDAO,
+            competenciaController,
+            consoleInputReader
+    )
+
     List<Curtida> curtidas = []
-    CandidatoDAO candidatoDAO = new CandidatoDAO()
-    EmpresaDAO empresaDAO = new EmpresaDAO()
-    CandidatoController candidatoController = new CandidatoController()
-    EmpresaController empresaController = new EmpresaController()
-    VagaController vagaController = new VagaController()
-    CompetenciaController competenciaController = new CompetenciaController()
+
 
     void listarCurtidas() {
         println "\n-- Histórico de Curtidas --"
@@ -25,7 +50,7 @@ class Linketinder {
 
 
     void registrarCurtida(Pessoa origem, Pessoa destino) {
-        def curtida = new Curtida(origem: origem, destino: destino)
+        Curtida curtida = new Curtida(origem: origem, destino: destino)
         curtidas << curtida
         println "${origem.nome} curtiu ${destino.nome}"
 
@@ -37,88 +62,118 @@ class Linketinder {
         }
     }
 
-    def curtirEmpresa() {
-        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+    void curtirEmpresa() {
+        List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
+        List<Empresa> empresas = empresaDAO.buscarEmpresas()
 
-        listarCandidatos()
+        candidatoController.listarCandidatos()
         print "Digite o índice do candidato que irá curtir: "
         String opcaoC = System.in.newReader().readLine()
-        def origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        Candidato origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
 
-        listarEmpresas()
+        empresaController.listarEmpresas()
         print "Digite o índice da empresa que será curtida: "
         String opcaoE = System.in.newReader().readLine()
-        def destino = empresas.get(Integer.parseInt(opcaoE) - 1)
+        Empresa destino = empresas.get(Integer.parseInt(opcaoE) - 1)
         registrarCurtida(origem, destino)
     }
 
-    def curtirCandidato() {
-        List<Candidato> candidatos = candidatoDAO.listarTodosCandidatos()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+    void curtirCandidato() {
+        List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
+        List<Empresa> empresas = empresaDAO.buscarEmpresas()
 
-        listarEmpresas()
+        empresaController.listarEmpresas()
         print "Digite o índice da empresa que irá curtir: "
         String opcaoE = System.in.newReader().readLine()
-        def origem = empresas.get(Integer.parseInt(opcaoE) - 1)
+        Empresa origem = empresas.get(Integer.parseInt(opcaoE) - 1)
 
-        listarCandidatos()
+       candidatoController.listarCandidatos()
         print "Digite o índice do candidato que será curtido: "
         String opcaoC = System.in.newReader().readLine()
-        def destino = candidatos.get(Integer.parseInt(opcaoC) - 1)
+        Candidato destino = candidatos.get(Integer.parseInt(opcaoC) - 1)
         registrarCurtida(origem, destino)
+    }
+
+    static void mostrarMenu() {
+        println "\n===== Menu Principal =====\n"
+
+        println "===== Opções de Candidato ====="
+        println "1  - Listar Candidatos"
+        println "2  - Cadastrar Candidato"
+        println "3  - Atualizar Candidato"
+        println "4  - Deletar Candidato"
+        println "5  - Adicionar Competência"
+        println ""
+
+        println "===== Opções de Empresa ====="
+        println "6  - Listar Empresas"
+        println "7  - Cadastrar Empresa"
+        println "8  - Atualizar Empresa"
+        println "9  - Deletar Empresa"
+        println ""
+
+        println "===== Opções de Vaga ====="
+        println "10 - Listar Vagas"
+        println "11 - Cadastrar Vaga"
+        println "12 - Atualizar Vaga"
+        println "13 - Deletar Vaga"
+        println "14 - Adicionar Competência"
+        println ""
+
+        println "===== Opções de Competência ====="
+        println "15 - Listar Competências"
+        println "16 - Cadastrar Competência"
+        println "17 - Atualizar Competência"
+        println "18 - Deletar Competência"
+        println ""
+
+        println "===== Opções de Curtida ====="
+        println "19 - Listar Curtidas"
+        println "20 - Candidato Curtir Empresa"
+        println "21 - Empresa Curtir Candidato"
+        println ""
+
+        println "0  - Sair"
+        print "\nEscolha uma opção: "
     }
 
     void menu() {
-        def reader = System.in.newReader()
-        def sair = false
+        BufferedReader reader = System.in.newReader()
+        Boolean sair = false
         while (!sair) {
-            println "\nMenu Principal"
-            println "1 - Listar Candidatos"
-            println "2 - Listar Empresas"
-            println "3 - Listar Curtidas"
-            println "4 - Cadastrar Candidato"
-            println "5 - Cadastrar Empresa"
-            println "6 - Candidato Curtir Empresa"
-            println "7 - Empresa Curtir Candidato"
-            println "8 - Atualizar Candidato"
-            println "9 - Atualizar Empresa"
-            println "10 - Deletar Candidato"
-            println "11 - Deletar Empresa"
-            println "12 - Listar Vagas"
-            println "13 - Cadastrar Vaga"
-            println "14 - Atualizar Vaga"
-            println "15 - Deletar Vaga"
-            println "16 - Listar Competências"
-            println "17 - Cadastrar Competência"
-            println "18 - Atualizar Competência"
-            println "19 - Deletar Competência"
-            println "0  - Sair"
-            print "Escolha uma opção: "
-
-            def opcao = reader.readLine()?.trim()
+            mostrarMenu()
+            String opcao = reader.readLine()?.trim()
             println opcao
             switch (opcao) {
                 case "1": candidatoController.listarCandidatos(); break
-                case "2": empresaController.listarEmpresas(); break
-                case "3": listarCurtidas(); break
-                case "4": candidatoController.cadastrarCandidato(); break
-                case "5": empresaController.cadastrarEmpresa(); break
-                case "6": curtirEmpresa(); break
-                case "7": curtirCandidato(); break
-                case "8": candidatoController.atualizarCandidato(); break
-                case "9": empresaController.atualizarEmpresa(); break
-                case "10": candidatoController.deletarCandidato(); break
-                case "11": empresaController.deletarEmpresa(); break
-                case "12": vagaController.listarVagas(); break
-                case "13": vagaController.cadastrarVaga(); break
-                case "14": vagaController.atualizarVaga(); break
-                case "15": vagaController.deletarVaga(); break
-                case "16": competenciaController.listarCompetencias(); break
-                case "17": competenciaController.cadastrarCompetencia(); break
-                case "18": competenciaController.atualizarCompetencia(); break
-                case "19": competenciaController.deletarCompetencia(); break
+                case "2": candidatoController.cadastrarCandidato(); break
+                case "3": candidatoController.atualizarCandidato(); break
+                case "4": candidatoController.deletarCandidato(); break
+                case "5": candidatoController.adicionarCompetenciaCandidato(); break
+
+                case "6": empresaController.listarEmpresas(); break
+                case "7": empresaController.cadastrarEmpresa(); break
+                case "8": empresaController.atualizarEmpresa(); break
+                case "9": empresaController.deletarEmpresa(); break
+
+                case "10": vagaController.listarVagas(); break
+                case "11": vagaController.cadastrarVaga(); break
+                case "12": vagaController.atualizarVaga(); break
+                case "13": vagaController.deletarVaga(); break
+                case "14": vagaController.adicionarCompetenciaVaga(); break
+
+                case "15": competenciaController.listarCompetencias(); break
+                case "16": competenciaController.cadastrarCompetencia(); break
+                case "17": competenciaController.atualizarCompetencia(); break
+                case "18": competenciaController.deletarCompetencia(); break
+
+                case "19": listarCurtidas(); break
+                case "20": curtirEmpresa(); break
+                case "21": curtirCandidato(); break
+
+
                 case "0": sair = true; break
+
                 default: println "Opção inválida!"; break
             }
         }

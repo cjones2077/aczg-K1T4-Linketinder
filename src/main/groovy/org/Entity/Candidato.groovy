@@ -7,6 +7,7 @@ class Candidato extends Pessoa {
     Date data_nascimento
     String formacao
     String sobrenome
+    List<Competencia> competencias = []
 
     @Override
     String toString() {
@@ -17,4 +18,9 @@ class Candidato extends Pessoa {
         Estado: $estado
         Competências: ${competencias.join(", ")}"""
     }
+
+    String imprimirCompetencias() {
+        return competencias?.collect { it.nome }?.join(", ") ?: "Nenhuma"
+    }
+
 }

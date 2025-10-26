@@ -5,12 +5,11 @@ import Persistence.DBConnection
 
 static void main(String[] args) {
     try{
+        DBConnection.abrirConexao()
         def linketinder = new Linketinder()
-        DBConnection.conectar()
         linketinder.menu()
-        DBConnection.fechaConexao()
+        DBConnection.fecharConexao()
     } catch (Exception e){
         e.printStackTrace()
     }
-
 }

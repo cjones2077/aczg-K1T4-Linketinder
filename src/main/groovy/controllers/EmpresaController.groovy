@@ -2,51 +2,70 @@ package controllers
 
 import DAO.EmpresaDAO
 import org.Entity.Empresa
+import utils.ConsoleInputReader
 
 class EmpresaController {
-    EmpresaDAO empresaDAO = new EmpresaDAO()
+    private final EmpresaDAO empresaDAO
+    private final ConsoleInputReader consoleInputReader
+
+    EmpresaController(EmpresaDAO empresaDAO, ConsoleInputReader consoleInputReader) {
+        this.empresaDAO = empresaDAO
+        this.consoleInputReader = consoleInputReader
+    }
 
     void listarEmpresas() {
         println "\n-- Empresas --"
-        empresaDAO.listarTodasEmpresas().eachWithIndex { e, idx ->
+        empresaDAO.buscarEmpresas().eachWithIndex { e, idx ->
             println "${idx + 1} - ${e.nome} | CNPJ: ${e.cnpj} | Email: ${e.email}"
         }
     }
 
     void cadastrarEmpresa() {
-        def reader = System.in.newReader()
-        print "Nome: "; String nome = reader.readLine()
-        print "Email: "; String email = reader.readLine()
-        print "CEP: "; String cep = reader.readLine()
-        print "Descrição: "; String descricao = reader.readLine()
-        print "CNPJ: "; String cnpj = reader.readLine()
-        print "País: "; String pais = reader.readLine()
-        print "Estado: "; String estado = reader.readLine()
-        def empresa = new Empresa(nome: nome, email: email, cep: cep, descricao: descricao,
-                cnpj: cnpj, pais: pais, estado: estado)
+        String nome = consoleInputReader.readLine("Nome: ")
+        String email = consoleInputReader.readLine("Email: ")
+        String cep = consoleInputReader.readLine("CEP: ")
+        String descricao = consoleInputReader.readLine("Descrição: ")
+        String cnpj = consoleInputReader.readLine("CNPJ: ")
+        String pais = consoleInputReader.readLine("País: ")
+        String estado = consoleInputReader.readLine("Estado: ")
+
+        Empresa empresa = new Empresa(
+                nome: nome,
+                email: email,
+                cep: cep,
+                descricao: descricao,
+                cnpj: cnpj,
+                pais: pais,
+                estado: estado
+        )
+
         empresaDAO.criarEmpresa(empresa)
         println "Empresa cadastrada!"
     }
 
     void atualizarEmpresa() {
-        def reader = System.in.newReader()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+        List<Empresa> empresas = empresaDAO.buscarEmpresas()
         listarEmpresas()
-        print "Escolha índice da empresa: "; int idx = reader.readLine().toInteger() - 1
+        int idx = consoleInputReader.readLine("Escolha índice da empresa: ").toInteger() - 1
         Empresa e = empresas.get(idx)
-        print "Nome [${e.nome}]: "; String nome = reader.readLine(); if(nome) e.nome = nome
-        print "Email [${e.email}]: "; String email = reader.readLine(); if(email) e.email = email
+
+        String nome = consoleInputReader.readLine("Nome [${e.nome}]: "); if (nome) e.nome = nome
+        String email = consoleInputReader.readLine("Email [${e.email}]: "); if (email) e.email = email
+        String pais = consoleInputReader.readLine("País [${e.pais}]: "); if (pais) e.pais = pais
+        String cep = consoleInputReader.readLine("CEP [${e.cep}]: "); if (cep) e.cep = cep
+        String descricao = consoleInputReader.readLine("Descrição [${e.descricao}]: "); if (descricao) e.descricao = descricao
+        String senha = consoleInputReader.readLine("Senha [${e.senha}]: "); if (senha) e.senha = senha
+
         empresaDAO.atualizarEmpresa(e)
         println "Empresa atualizada!"
     }
 
     void deletarEmpresa() {
-        def reader = System.in.newReader()
-        List<Empresa> empresas = empresaDAO.listarTodasEmpresas()
+        List<Empresa> empresas = empresaDAO.buscarEmpresas()
         listarEmpresas()
-        print "Escolha índice da empresa: "; int idx = reader.readLine().toInteger() - 1
+        int idx = consoleInputReader.readLine("Escolha índice da empresa: ").toInteger() - 1
         Empresa e = empresas.get(idx)
-        empresaDAO.deletarEmpresa(e.cnpj)
+        empresaDAO.deletarPorCnpj(e.cnpj)
         println "Empresa deletada!"
     }
 }

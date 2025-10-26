@@ -12,7 +12,6 @@ class Empresa extends Pessoa {
         ${super.toString()}
         CNPJ: $cnpj
         País: $pais
-        Estado: $estado
-        Competências esperadas: ${competencias.join(", ")}"""
+        Estado: $estado"""
     }
 }
