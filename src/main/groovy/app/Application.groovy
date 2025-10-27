@@ -6,7 +6,8 @@ import Persistence.DBConnection
 static void main(String[] args) {
     try{
         DBConnection.abrirConexao()
-        def linketinder = new Linketinder()
+        AppContainer container = new AppContainer()
+        Linketinder linketinder = container.criarAplicacao()
         linketinder.menu()
         DBConnection.fecharConexao()
     } catch (Exception e){
