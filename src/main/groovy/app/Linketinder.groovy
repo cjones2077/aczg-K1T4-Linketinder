@@ -4,7 +4,6 @@ import DAO.CandidatoDAO
 import DAO.CompetenciaDAO
 import DAO.EmpresaDAO
 import DAO.VagaDAO
-import Persistence.DBConnection
 import View.MenuView
 import org.Entity.Candidato
 import org.Entity.Curtida

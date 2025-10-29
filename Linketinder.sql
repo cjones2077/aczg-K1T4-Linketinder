@@ -45,18 +45,21 @@ CREATE TABLE vagas_competencias (
   id_competencia INT REFERENCES competencias(id)
 );
 
-CREATE TABLE empresa_curte_candidato (
+CREATE TABLE curtidas (
   id SERIAL PRIMARY KEY,
-  cnpj_empresa VARCHAR(18) REFERENCES empresas(cnpj),
   cpf_candidato VARCHAR(14) REFERENCES candidatos(cpf),
-  data_curtida DATE DEFAULT CURRENT_DATE
+  cnpj_empresa VARCHAR(18) REFERENCES empresas(cnpj),
+  id_vaga INT REFERENCES vagas(id),
+  data_curtida TIMESTAMP DEFAULT now()
 );
 
-CREATE TABLE candidato_curte_vaga (
+CREATE TABLE matches (
   id SERIAL PRIMARY KEY,
-  cpf_candidato VARCHAR(14) REFERENCES candidatos(cpf),
+  cpf_candidato VARCHAR(14) NOT NULL REFERENCES candidatos(cpf),
+  cnpj_empresa VARCHAR(18) NOT NULL REFERENCES empresas(cnpj),
   id_vaga INT REFERENCES vagas(id),
-  data_curtida DATE DEFAULT CURRENT_DATE
+  origem VARCHAR(20),
+  matched_at TIMESTAMP DEFAULT now(),
 );
 
 INSERT INTO candidatos (cpf, nome, sobrenome, email, data_nascimento, formacao, pais, cep, descricao, senha)
@@ -74,3 +77,24 @@ VALUES
 ('11.222.333/0001-22', 'HealthPlus', 'contato@healthplus.com', '2012-10-20', 'Brasil', '20031-050', 'Clínica digital focada em telemedicina e análise de dados de saúde.', 'admin789'),
 ('44.555.666/0001-33', 'EcoBuild Engenharia', 'contato@ecobuild.com', '2016-12-05', 'Brasil', '88015-600', 'Empresa de engenharia civil sustentável.', 'admin321'),
 ('77.888.999/0001-44', 'ByteWave', 'suporte@bytewave.com', '2020-05-25', 'Brasil', '30120-040', 'Desenvolvedora de softwares corporativos e soluções em nuvem.', 'admin654');
+
+INSERT INTO curtidas (cpf_candidato, cnpj_empresa, id_vaga)
+VALUES
+('123.456.789-00', '12.345.678/0001-00', 1), -- Lucas curte TechNova
+('987.654.321-00', '98.765.432/0001-11', 2), -- Mariana curte EduSmart
+('456.789.123-00', '11.222.333/0001-22', 3), -- Rafael curte HealthPlus
+('321.654.987-00', '44.555.666/0001-33', 4), -- Beatriz curte EcoBuild
+('654.987.321-00', '77.888.999/0001-44', 5), -- Carlos curte ByteWave
+
+('987.654.321-00', '12.345.678/0001-00', 1), -- Mariana curte TechNova
+('456.789.123-00', '44.555.666/0001-33', 4), -- Rafael curte EcoBuild 
+('321.654.987-00', '98.765.432/0001-11', 2), -- Beatriz curte EduSmart 
+('654.987.321-00', '12.345.678/0001-00', 1); -- Carlos curte TechNova 
+
+INSERT INTO matches (cpf_candidato, cnpj_empresa, id_vaga, origem)
+VALUES
+('123.456.789-00', '12.345.678/0001-00', 1, 'candidato'),
+
+('654.987.321-00', '12.345.678/0001-00', 1, 'candidato'),
+
+('987.654.321-00', '98.765.432/0001-11', 2, 'empresa');
