@@ -1,32 +1,31 @@
-package Factory.Connections
-@Grab(group='org.postgresql', module='postgresql', version='42.6.0')
+package factory.connections
 
 import java.sql.Connection
 import java.sql.DriverManager
 
-class PostgreSQLConnection implements DBConnection {
+class MySQLConnection implements DBConnection {
     static final url = 'jdbc:postgresql://localhost:5432/linketinder'
     static final user = 'admin'
     static final password = 'admin'
     static public Connection conexao = null;
-    private static PostgreSQLConnection instancia
+    private static MySQLConnection instancia
 
-    private PostgreSQLConnection() {}
+    private MySQLConnection() {}
 
-    static PostgreSQLConnection getInstancia() {
+    static MySQLConnection getInstancia() {
         if (instancia == null) {
-            instancia = new PostgreSQLConnection()
+            instancia = new MySQLConnection()
         }
         return instancia
     }
 
     @Override
-    void abrirConexao() {
+     void abrirConexao() {
         conexao = DriverManager.getConnection(url, user, password)
     }
 
     @Override
-    void fecharConexao(){
+    void fecharConexao() {
         conexao.close()
     }
 

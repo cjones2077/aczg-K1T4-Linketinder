@@ -1,9 +1,9 @@
-import controllers.CandidatoController
-import DAO.CandidatoDAO
-import DAO.CompetenciaDAO
-import controllers.CompetenciaController
-import org.Entity.Candidato
-import org.Entity.Competencia
+import controller.CandidatoController
+import model.DAO.CandidatoDAO
+import model.DAO.CompetenciaDAO
+import controller.CompetenciaController
+import model.Entity.Candidato
+import model.Entity.Competencia
 import spock.lang.Specification
 import utils.ConsoleInputReader
 
@@ -30,7 +30,7 @@ class CandidatoControllerSpec extends Specification {
         candidatoDAO.buscarCandidatos() >> candidatos
 
         when:
-        controller.listarCandidatos()
+        controller.buscarCandidatos()
 
         then:
         1 * candidatoDAO.buscarCandidatos()

@@ -1,10 +1,14 @@
-package org.Entity
+package model.Entity
 
 class Empresa extends Pessoa {
     String cnpj
-    String pais
-    String estado
     Date data_criacao
+    String nome
+    String email
+    String cep
+    String descricao
+    String pais
+    String senha
 
     @Override
     String toString() {

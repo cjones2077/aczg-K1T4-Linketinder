@@ -1,4 +1,4 @@
-package Factory.Connections
+package factory.connections
 
 class DatabaseConnectionFactory {
     static DBConnection criarConexao(String tipo) {

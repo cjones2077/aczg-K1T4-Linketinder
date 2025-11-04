@@ -1,8 +1,8 @@
-import DAO.EmpresaDAO
-import org.Entity.Empresa
+import model.DAO.EmpresaDAO
+import model.Entity.Empresa
 import spock.lang.Specification
 import utils.ConsoleInputReader
-import controllers.EmpresaController
+import controller.EmpresaController
 
 class EmpresaControllerSpec extends Specification {
 
@@ -11,14 +11,14 @@ class EmpresaControllerSpec extends Specification {
 
     EmpresaController controller = new EmpresaController(empresaDAOMock, consoleMock)
 
-    def "listarEmpresas deve chamar buscarEmpresas e imprimir lista"() {
+    def 'buscarEmpresas deve chamar buscarEmpresas e imprimir lista'() {
         given:
         Empresa e1 = new Empresa(nome: "Empresa1", cnpj: "123", email: "e1@test.com")
         Empresa e2 = new Empresa(nome: "Empresa2", cnpj: "456", email: "e2@test.com")
         empresaDAOMock.buscarEmpresas() >> [e1, e2]
 
         when:
-        controller.listarEmpresas()
+        controller.buscarEmpresas()
 
         then:
         1 * empresaDAOMock.buscarEmpresas()

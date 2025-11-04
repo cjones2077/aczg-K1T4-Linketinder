@@ -1,4 +1,4 @@
-package org.Entity
+package model.Entity
 
 class Vaga {
     int id

@@ -1,6 +1,6 @@
-package DAO
+package model.DAO
 
-import org.Entity.Empresa
+import model.Entity.Empresa
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet

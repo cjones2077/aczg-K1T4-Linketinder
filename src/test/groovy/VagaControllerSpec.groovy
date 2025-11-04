@@ -1,14 +1,14 @@
-import DAO.CompetenciaDAO
-import DAO.EmpresaDAO
-import DAO.VagaDAO
-import org.Entity.Competencia
-import org.Entity.Empresa
-import org.Entity.Vaga
+import model.DAO.CompetenciaDAO
+import model.DAO.EmpresaDAO
+import model.DAO.VagaDAO
+import model.Entity.Competencia
+import model.Entity.Empresa
+import model.Entity.Vaga
 import spock.lang.Specification
 import utils.ConsoleInputReader
-import controllers.CompetenciaController
-import controllers.EmpresaController
-import controllers.VagaController
+import controller.CompetenciaController
+import controller.EmpresaController
+import controller.VagaController
 
 class VagaControllerSpec extends Specification {
 

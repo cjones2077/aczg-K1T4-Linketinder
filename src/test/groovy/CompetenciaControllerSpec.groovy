@@ -1,8 +1,8 @@
-import DAO.CompetenciaDAO
-import org.Entity.Competencia
+import model.DAO.CompetenciaDAO
+import model.Entity.Competencia
 import spock.lang.Specification
 import utils.ConsoleInputReader
-import controllers.CompetenciaController
+import controller.CompetenciaController
 
 class CompetenciaControllerSpec extends Specification {
 
@@ -23,14 +23,14 @@ class CompetenciaControllerSpec extends Specification {
         })
     }
 
-    def "listarCompetencias deve chamar buscarCompetencias e imprimir lista"() {
+    def 'buscarCompetencias deve chamar buscarCompetencias e imprimir lista'() {
         given:
         Competencia c1 = new Competencia(nome: "Comp1", id: 1)
         Competencia c2 = new Competencia(nome: "Comp2", id: 2)
         competenciaDAOMock.buscarCompetencias() >> [c1, c2]
 
         when:
-        controller.listarCompetencias()
+        controller.buscarCompetencias()
 
         then:
         1 * competenciaDAOMock.buscarCompetencias()

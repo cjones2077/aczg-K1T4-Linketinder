@@ -1,14 +1,17 @@
 package app
 
-import Factory.Connections.DBConnection
-import Factory.Connections.DatabaseConnectionFactory
+import factory.connections.DBConnection
+import factory.connections.DatabaseConnectionFactory
 
 static void main(String[] args) {
-    try{
-        AppContainer container = new AppContainer()
+    AppContainer container = new AppContainer()
+    try {
         Linketinder linketinder = container.criarAplicacao()
-        linketinder.menu()
-    } catch (Exception e){
+        linketinder.mostrarMenu()
+    } catch (Exception e) {
         e.printStackTrace()
+    }
+    finally {
+        container.fecharConexao()
     }
 }

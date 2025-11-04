@@ -1,4 +1,4 @@
-package org.Entity
+package model.Entity
 
 class Candidato extends Pessoa {
     String cpf

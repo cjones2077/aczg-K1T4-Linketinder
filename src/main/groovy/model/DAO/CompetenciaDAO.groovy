@@ -1,7 +1,7 @@
-package DAO
+package model.DAO
 
 
-import org.Entity.Competencia
+import model.Entity.Competencia
 
 import java.sql.Connection
 import java.sql.PreparedStatement

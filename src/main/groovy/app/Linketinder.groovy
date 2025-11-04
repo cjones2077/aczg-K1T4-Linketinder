@@ -1,15 +1,15 @@
 package app
 
-import DAO.CandidatoDAO
-import DAO.CompetenciaDAO
-import DAO.EmpresaDAO
-import DAO.VagaDAO
-import View.MenuView
-import org.Entity.Candidato
-import org.Entity.Curtida
-import org.Entity.Empresa
-import org.Entity.Pessoa
-import controllers.*
+import model.DAO.CandidatoDAO
+import model.DAO.CompetenciaDAO
+import model.DAO.EmpresaDAO
+import model.DAO.VagaDAO
+import view.MenuView
+import model.Entity.Candidato
+import model.Entity.Curtida
+import model.Entity.Empresa
+import model.Entity.Pessoa
+import controller.*
 import utils.ConsoleInputReader
 
 
@@ -55,6 +55,9 @@ class Linketinder {
 
     List<Curtida> curtidas = []
 
+    void mostrarMenu() {
+        this.menuView.menu()
+    }
 
     void listarCurtidas() {
         println "\n-- Histórico de Curtidas --"
@@ -79,11 +82,11 @@ class Linketinder {
         List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
         List<Empresa> empresas = empresaDAO.buscarEmpresas()
 
-        candidatoController.listarCandidatos()
+        candidatoController.buscarCandidatos()
         String opcaoC = consoleInputReader.readLine("Digite o índice do candidato que irá curtir: ")
         Candidato origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
 
-        empresaController.listarEmpresas()
+        empresaController.buscarEmpresas()
         print "Digite o índice da empresa que será curtida: "
         String opcaoE = System.in.newReader().readLine()
         Empresa destino = empresas.get(Integer.parseInt(opcaoE) - 1)
@@ -94,54 +97,14 @@ class Linketinder {
         List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
         List<Empresa> empresas = empresaDAO.buscarEmpresas()
 
-        empresaController.listarEmpresas()
+        empresaController.buscarEmpresas()
         String opcaoE = consoleInputReader.readLine("Digite o índice da empresa que irá curtir: ")
         Empresa origem = empresas.get(Integer.parseInt(opcaoE) - 1)
 
-       candidatoController.listarCandidatos()
+       candidatoController.buscarCandidatos()
         String opcaoC = consoleInputReader.readLine("Digite o índice do candidato que será curtido: ")
         Candidato destino = candidatos.get(Integer.parseInt(opcaoC) - 1)
         registrarCurtida(origem, destino)
     }
 
-    void menu() {
-        Boolean sair = false
-        while (!sair) {
-            menuView.mostrarMenu()
-            String opcao = consoleInputReader.readLine(null)?.trim()
-            println opcao
-            switch (opcao) {
-                case "1": candidatoController.listarCandidatos(); break
-                case "2": candidatoController.cadastrarCandidato(); break
-                case "3": candidatoController.atualizarCandidato(); break
-                case "4": candidatoController.deletarCandidato(); break
-                case "5": candidatoController.adicionarCompetenciaCandidato(); break
-
-                case "6": empresaController.listarEmpresas(); break
-                case "7": empresaController.cadastrarEmpresa(); break
-                case "8": empresaController.atualizarEmpresa(); break
-                case "9": empresaController.deletarEmpresa(); break
-
-                case "10": vagaController.listarVagas(); break
-                case "11": vagaController.cadastrarVaga(); break
-                case "12": vagaController.atualizarVaga(); break
-                case "13": vagaController.deletarVaga(); break
-                case "14": vagaController.adicionarCompetenciaVaga(); break
-
-                case "15": competenciaController.listarCompetencias(); break
-                case "16": competenciaController.cadastrarCompetencia(); break
-                case "17": competenciaController.atualizarCompetencia(); break
-                case "18": competenciaController.deletarCompetencia(); break
-
-                case "19": listarCurtidas(); break
-                case "20": curtirEmpresa(); break
-                case "21": curtirCandidato(); break
-
-
-                case "0": sair = true; break
-
-                default: println "Opção inválida!"; break
-            }
-        }
-    }
 }
