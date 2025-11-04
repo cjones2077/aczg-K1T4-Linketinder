@@ -1,6 +1,6 @@
 package DAO
 
-import Persistence.DBConnection
+
 import org.Entity.Vaga
 
 import java.sql.Connection

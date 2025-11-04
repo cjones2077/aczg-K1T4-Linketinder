@@ -1,14 +1,12 @@
 package DAO
 
-import Persistence.DBConnection
-import controllers.CompetenciaController
+
 import org.Entity.Competencia
 
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
-import utils.DBUtils
 
 class CompetenciaDAO {
 

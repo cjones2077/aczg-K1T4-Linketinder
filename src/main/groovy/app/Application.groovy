@@ -1,15 +1,13 @@
 package app
 
-
-import Persistence.DBConnection
+import Factory.Connections.DBConnection
+import Factory.Connections.DatabaseConnectionFactory
 
 static void main(String[] args) {
     try{
-        DBConnection.abrirConexao()
         AppContainer container = new AppContainer()
         Linketinder linketinder = container.criarAplicacao()
         linketinder.menu()
-        DBConnection.fecharConexao()
     } catch (Exception e){
         e.printStackTrace()
     }

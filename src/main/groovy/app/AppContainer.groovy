@@ -1,7 +1,8 @@
 package app
 
 import DAO.*
-import Persistence.DBConnection
+import Factory.Connections.DBConnection
+import Factory.Connections.DatabaseConnectionFactory
 import View.MenuView
 import controllers.*
 import utils.ConsoleInputReader
@@ -25,14 +26,15 @@ class AppContainer {
 
     AppContainer() {
         // Infra
-        this.dbConnection = new DBConnection()
+        this.dbConnection = DatabaseConnectionFactory.criarConexao("postgres")
+        dbConnection.abrirConexao()
         this.consoleInputReader = new ConsoleInputReader()
 
         // DAOs (injeção explícita da conexão)
-        this.candidatoDAO = new CandidatoDAO(dbConnection.conexao)
-        this.empresaDAO = new EmpresaDAO(dbConnection.conexao)
-        this.competenciaDAO = new CompetenciaDAO(dbConnection.conexao)
-        this.vagaDAO = new VagaDAO(dbConnection.conexao)
+        this.candidatoDAO = new CandidatoDAO(dbConnection.getConexao())
+        this.empresaDAO = new EmpresaDAO(dbConnection.getConexao())
+        this.competenciaDAO = new CompetenciaDAO(dbConnection.getConexao())
+        this.vagaDAO = new VagaDAO(dbConnection.getConexao())
 
         // Controllers (injeção de dependências)
         this.empresaController = new EmpresaController(empresaDAO, consoleInputReader)
