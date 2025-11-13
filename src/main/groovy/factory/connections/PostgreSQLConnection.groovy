@@ -5,7 +5,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 class PostgreSQLConnection implements DBConnection {
-    static final url = 'jdbc:postgresql://localhost:5432/linketinder'
+    static final url = 'jdbc:postgresql://localhost:5432/postgres'
     static final user = 'admin'
     static final password = 'admin'
     static public Connection conexao = null;
