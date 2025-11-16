@@ -1,7 +1,7 @@
 package view
 
 import controller.CompetenciaController
-import model.Entity.Competencia
+import model.Competencia
 import utils.ConsoleInputReader
 import utils.MenuUtils
 

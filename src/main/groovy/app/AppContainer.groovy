@@ -3,11 +3,11 @@ package app
 
 import factory.connections.DBConnection
 import factory.connections.DatabaseConnectionFactory
-import model.DAO.CandidatoDAO
-import model.DAO.CompetenciaDAO
-import model.DAO.CurtidaDAO
-import model.DAO.EmpresaDAO
-import model.DAO.VagaDAO
+import DAO.CandidatoDAO
+import DAO.CompetenciaDAO
+import DAO.CurtidaDAO
+import DAO.EmpresaDAO
+import DAO.VagaDAO
 import view.CandidatoView
 import view.CompetenciaView
 import view.CurtidaView
@@ -19,71 +19,69 @@ import view.VagaView
 
 class AppContainer {
 
-    private final DBConnection dbConnection
-    private final ConsoleInputReader consoleInputReader
-    private final MenuView menuView
-    // DAOs
-    private final CandidatoDAO candidatoDAO
-    private final EmpresaDAO empresaDAO
-    private final CompetenciaDAO competenciaDAO
-    private final VagaDAO vagaDAO
-    private final CurtidaDAO curtidaDAO
+    private static final AppContainer instancia = new AppContainer()
 
-    // Controllers
-    private final CandidatoController candidatoController
-    private final EmpresaController empresaController
-    private final CompetenciaController competenciaController
-    private final VagaController vagaController
-    private final CurtidaController curtidaController
+    static AppContainer getInstancia() {
+        return instancia
+    }
 
-    // Views
-    private final CandidatoView candidatoView
-    private final EmpresaView empresaView
-    private final CompetenciaView competenciaView
-    private final VagaView vagaView
-    private final CurtidaView curtidaView
+    final DBConnection dbConnection
+    final ConsoleInputReader consoleInputReader
+    final CandidatoDAO candidatoDAO
+    final EmpresaDAO empresaDAO
+    final CompetenciaDAO competenciaDAO
+    final VagaDAO vagaDAO
+    final CurtidaDAO curtidaDAO
 
-    AppContainer() {
+    final CandidatoController candidatoController
+    final EmpresaController empresaController
+    final CompetenciaController competenciaController
+    final VagaController vagaController
+    final CurtidaController curtidaController
+
+    final MenuView menuView
+    final CandidatoView candidatoView
+    final EmpresaView empresaView
+    final CompetenciaView competenciaView
+    final VagaView vagaView
+    final CurtidaView curtidaView
+
+    private AppContainer() {
         this.dbConnection = DatabaseConnectionFactory.criarConexao("postgres")
         dbConnection.abrirConexao()
-        this.consoleInputReader = new ConsoleInputReader()
 
-        this.candidatoDAO = new CandidatoDAO(dbConnection.getConexao())
-        this.empresaDAO = new EmpresaDAO(dbConnection.getConexao())
-        this.competenciaDAO = new CompetenciaDAO(dbConnection.getConexao())
-        this.vagaDAO = new VagaDAO(dbConnection.getConexao())
-        this.curtidaDAO = new CurtidaDAO(dbConnection.getConexao())
+        consoleInputReader = new ConsoleInputReader()
 
-        this.empresaController = new EmpresaController(empresaDAO)
-        this.competenciaController = new CompetenciaController(competenciaDAO)
-        this.curtidaController = new CurtidaController(curtidaDAO)
+        candidatoDAO = new CandidatoDAO(dbConnection.conexao)
+        empresaDAO = new EmpresaDAO(dbConnection.conexao)
+        competenciaDAO = new CompetenciaDAO(dbConnection.conexao)
+        vagaDAO = new VagaDAO(dbConnection.conexao)
+        curtidaDAO = new CurtidaDAO(dbConnection.conexao)
 
-        this.candidatoController = new CandidatoController(
-                candidatoDAO,
-                competenciaDAO,
-                competenciaController,
+        empresaController = new EmpresaController(empresaDAO)
+        competenciaController = new CompetenciaController(competenciaDAO)
+        curtidaController = new CurtidaController(curtidaDAO)
+
+        candidatoController = new CandidatoController(
+                candidatoDAO, competenciaDAO, competenciaController, consoleInputReader
+        )
+
+        vagaController = new VagaController(
+                vagaDAO, empresaDAO, empresaController,
+                competenciaDAO, competenciaController,
                 consoleInputReader
         )
 
-        this.vagaController = new VagaController(
-                vagaDAO,
-                empresaDAO,
-                empresaController,
-                competenciaDAO,
-                competenciaController,
-                consoleInputReader
-        )
-
-        this.competenciaView = new CompetenciaView(competenciaController)
-        this.candidatoView = new CandidatoView(candidatoController, competenciaView)
-        this.empresaView = new EmpresaView(empresaController)
-        this.vagaView = new VagaView(vagaController, competenciaView, empresaView)
-        this.curtidaView = new CurtidaView(curtidaController)
-        this.menuView = new MenuView(candidatoView, empresaView, competenciaView, vagaView, curtidaView)
+        competenciaView = new CompetenciaView(competenciaController)
+        candidatoView = new CandidatoView(candidatoController, competenciaView)
+        empresaView = new EmpresaView(empresaController)
+        vagaView = new VagaView(vagaController, competenciaView, empresaView)
+        curtidaView = new CurtidaView(curtidaController)
+        menuView = new MenuView(candidatoView, empresaView, competenciaView, vagaView, curtidaView)
     }
 
     void fecharConexao() {
-        this.dbConnection.fecharConexao()
+        dbConnection.fecharConexao()
     }
 
     Linketinder criarAplicacao() {

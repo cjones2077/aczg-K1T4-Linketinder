@@ -1,7 +1,7 @@
 package controller
 
-import model.DAO.EmpresaDAO
-import model.Entity.Empresa
+import DAO.EmpresaDAO
+import model.Empresa
 import utils.ConsoleInputReader
 
 class EmpresaController {

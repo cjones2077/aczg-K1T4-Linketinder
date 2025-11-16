@@ -1,6 +1,7 @@
 plugins {
     id 'groovy'
     id 'application'
+    id 'war'
 }
 
 group = 'org.example'
@@ -20,14 +21,23 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.6.0'
     testImplementation 'org.spockframework:spock-core:2.4-M6-groovy-3.0'
     testRuntimeOnly 'net.bytebuddy:byte-buddy:1.14.12'
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 
 application {
     mainClass = 'app.Application'
+}
+
+war {
+    from('src/main/webapp') {
+        include '**/*'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jar {

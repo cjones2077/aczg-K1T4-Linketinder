@@ -1,7 +1,7 @@
 package controller
 
-import model.DAO.CompetenciaDAO
-import model.Entity.Competencia
+import DAO.CompetenciaDAO
+import model.Competencia
 import utils.ConsoleInputReader
 
 class CompetenciaController {

@@ -1,10 +1,8 @@
 package app
 
-import factory.connections.DBConnection
-import factory.connections.DatabaseConnectionFactory
 
 static void main(String[] args) {
-    AppContainer container = new AppContainer()
+    AppContainer container = AppContainer.getInstancia()
     try {
         Linketinder linketinder = container.criarAplicacao()
         linketinder.mostrarMenu()

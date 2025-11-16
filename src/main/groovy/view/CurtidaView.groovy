@@ -1,8 +1,8 @@
 package view
 
 import controller.CurtidaController
-import model.Entity.Competencia
-import model.Entity.Curtida
+import model.Competencia
+import model.Curtida
 import utils.ConsoleInputReader
 import utils.MenuUtils
 

@@ -1,11 +1,10 @@
 package controller
 
-import model.DAO.CompetenciaDAO
-import model.DAO.EmpresaDAO
-import model.DAO.VagaDAO
-import model.Entity.Competencia
-import model.Entity.Empresa
-import model.Entity.Vaga
+import DAO.CompetenciaDAO
+import DAO.EmpresaDAO
+import DAO.VagaDAO
+import model.Competencia
+import model.Vaga
 import utils.ConsoleInputReader
 
 class VagaController {

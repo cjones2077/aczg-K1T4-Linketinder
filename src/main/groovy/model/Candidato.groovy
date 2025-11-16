@@ -1,4 +1,4 @@
-package model.Entity
+package model
 
 class Candidato extends Pessoa {
     String cpf

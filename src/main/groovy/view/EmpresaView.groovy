@@ -1,7 +1,7 @@
 package view
 
 import controller.EmpresaController
-import model.Entity.Empresa
+import model.Empresa
 import utils.ConsoleInputReader
 import utils.MenuUtils
 

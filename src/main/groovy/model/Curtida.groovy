@@ -1,4 +1,4 @@
-package model.Entity
+package model
 
 import java.sql.Timestamp
 

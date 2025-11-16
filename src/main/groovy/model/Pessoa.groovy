@@ -1,4 +1,4 @@
-package model.Entity
+package model
 
 abstract class Pessoa {
     String nome

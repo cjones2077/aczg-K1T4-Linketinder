@@ -1,7 +1,7 @@
-package model.DAO
+package DAO
 
 
-import model.Entity.Vaga
+import model.Vaga
 
 import java.sql.Connection
 import java.sql.PreparedStatement

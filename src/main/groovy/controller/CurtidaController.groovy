@@ -1,7 +1,7 @@
 package controller
 
-import model.DAO.CurtidaDAO
-import model.Entity.Curtida
+import DAO.CurtidaDAO
+import model.Curtida
 
 class CurtidaController {
     private final CurtidaDAO curtidaDAO

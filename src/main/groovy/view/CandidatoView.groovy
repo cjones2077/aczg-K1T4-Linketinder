@@ -1,8 +1,8 @@
 package view
 
 import controller.CandidatoController
-import model.Entity.Candidato
-import model.Entity.Competencia
+import model.Candidato
+import model.Competencia
 import utils.ConsoleInputReader
 import utils.MenuUtils
 

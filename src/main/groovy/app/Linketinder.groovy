@@ -1,14 +1,14 @@
 package app
 
-import model.DAO.CandidatoDAO
-import model.DAO.CompetenciaDAO
-import model.DAO.EmpresaDAO
-import model.DAO.VagaDAO
+import DAO.CandidatoDAO
+import DAO.CompetenciaDAO
+import DAO.EmpresaDAO
+import DAO.VagaDAO
 import view.MenuView
-import model.Entity.Candidato
-import model.Entity.Curtida
-import model.Entity.Empresa
-import model.Entity.Pessoa
+import model.Candidato
+import model.Curtida
+import model.Empresa
+import model.Pessoa
 import controller.*
 import utils.ConsoleInputReader
 
@@ -26,8 +26,6 @@ class Linketinder {
     private final VagaController vagaController
 
     private final ConsoleInputReader consoleInputReader
-
-    private final List<Curtida> curtidas = []
 
     Linketinder(
             CandidatoDAO candidatoDAO,
@@ -53,58 +51,9 @@ class Linketinder {
         this.menuView = menuView
     }
 
-    List<Curtida> curtidas = []
-
     void mostrarMenu() {
         this.menuView.menu()
     }
 
-    void listarCurtidas() {
-        println "\n-- Histórico de Curtidas --"
-        curtidas.each { println it }
-    }
-
-
-    void registrarCurtida(Pessoa origem, Pessoa destino) {
-        Curtida curtida = new Curtida(origem: origem, destino: destino)
-        curtidas << curtida
-        println "${origem.nome} curtiu ${destino.nome}"
-
-        Curtida reciproca = curtidas.find { it.origem == destino && it.destino == origem }
-        if (reciproca) {
-            curtida.match = true
-            reciproca.match = true
-            println "Match entre ${origem.nome} e ${destino.nome}!"
-        }
-    }
-
-    void curtirEmpresa() {
-        List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
-        List<Empresa> empresas = empresaDAO.buscarEmpresas()
-
-        candidatoController.buscarCandidatos()
-        String opcaoC = consoleInputReader.readLine("Digite o índice do candidato que irá curtir: ")
-        Candidato origem = candidatos.get(Integer.parseInt(opcaoC) - 1)
-
-        empresaController.buscarEmpresas()
-        print "Digite o índice da empresa que será curtida: "
-        String opcaoE = System.in.newReader().readLine()
-        Empresa destino = empresas.get(Integer.parseInt(opcaoE) - 1)
-        registrarCurtida(origem, destino)
-    }
-
-    void curtirCandidato() {
-        List<Candidato> candidatos = candidatoDAO.buscarCandidatos()
-        List<Empresa> empresas = empresaDAO.buscarEmpresas()
-
-        empresaController.buscarEmpresas()
-        String opcaoE = consoleInputReader.readLine("Digite o índice da empresa que irá curtir: ")
-        Empresa origem = empresas.get(Integer.parseInt(opcaoE) - 1)
-
-       candidatoController.buscarCandidatos()
-        String opcaoC = consoleInputReader.readLine("Digite o índice do candidato que será curtido: ")
-        Candidato destino = candidatos.get(Integer.parseInt(opcaoC) - 1)
-        registrarCurtida(origem, destino)
-    }
 
 }

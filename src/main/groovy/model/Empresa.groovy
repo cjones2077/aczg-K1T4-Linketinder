@@ -1,4 +1,4 @@
-package model.Entity
+package model
 
 class Empresa extends Pessoa {
     String cnpj

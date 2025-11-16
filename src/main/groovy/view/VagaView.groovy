@@ -1,9 +1,9 @@
 package view
 
 import controller.VagaController
-import model.Entity.Empresa
-import model.Entity.Vaga
-import model.Entity.Competencia
+import model.Empresa
+import model.Vaga
+import model.Competencia
 import utils.ConsoleInputReader
 import utils.MenuUtils
 

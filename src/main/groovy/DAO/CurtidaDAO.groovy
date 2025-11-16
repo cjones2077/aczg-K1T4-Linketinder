@@ -1,7 +1,7 @@
-package model.DAO
+package DAO
 
-import model.Entity.Competencia
-import model.Entity.Curtida
+import model.Competencia
+import model.Curtida
 
 import java.sql.*
 

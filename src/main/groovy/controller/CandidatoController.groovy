@@ -1,9 +1,9 @@
 package controller
 
-import model.DAO.CandidatoDAO
-import model.DAO.CompetenciaDAO
-import model.Entity.Candidato
-import model.Entity.Competencia
+import DAO.CandidatoDAO
+import DAO.CompetenciaDAO
+import model.Candidato
+import model.Competencia
 import utils.ConsoleInputReader
 
 class CandidatoController {
