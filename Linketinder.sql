@@ -8,6 +8,7 @@ CREATE TABLE candidatos (
   nome VARCHAR(100),
   sobrenome VARCHAR(100),
   email VARCHAR(150),
+  estado VARCHAR(50),
   data_nascimento DATE,
   formacao TEXT,
   pais VARCHAR(20),
@@ -78,18 +79,22 @@ VALUES
 ('44.555.666/0001-33', 'EcoBuild Engenharia', 'contato@ecobuild.com', '2016-12-05', 'Brasil', '88015-600', 'Empresa de engenharia civil sustentável.', 'admin321'),
 ('77.888.999/0001-44', 'ByteWave', 'suporte@bytewave.com', '2020-05-25', 'Brasil', '30120-040', 'Desenvolvedora de softwares corporativos e soluções em nuvem.', 'admin654');
 
+INSERT INTO vagas (nome, descricao, local_vaga, empresa_cnpj) VALUES
+('Desenvolvedor Java', 'Desenvolvimento de aplicações Java corporativas', 'Porto Alegre', '12.345.678/0001-00'),
+('Analista de Sistemas', 'Análise e melhoria de sistemas internos', 'São Paulo', '12.345.678/0001-00'),
+('Engenheiro de Software', 'Projeto e manutenção de software', 'Curitiba', '12.345.678/0001-00')
+
+
 INSERT INTO curtidas (cpf_candidato, cnpj_empresa, id_vaga)
 VALUES
-('123.456.789-00', '12.345.678/0001-00', 1), -- Lucas curte TechNova
-('987.654.321-00', '98.765.432/0001-11', 2), -- Mariana curte EduSmart
-('456.789.123-00', '11.222.333/0001-22', 3), -- Rafael curte HealthPlus
-('321.654.987-00', '44.555.666/0001-33', 4), -- Beatriz curte EcoBuild
-('654.987.321-00', '77.888.999/0001-44', 5), -- Carlos curte ByteWave
+('123.456.789-00', '12.345.678/0001-00', 1), 
+('987.654.321-00', '98.765.432/0001-11', 2),
+('456.789.123-00', '11.222.333/0001-22', 3), 
 
-('987.654.321-00', '12.345.678/0001-00', 1), -- Mariana curte TechNova
-('456.789.123-00', '44.555.666/0001-33', 4), -- Rafael curte EcoBuild 
-('321.654.987-00', '98.765.432/0001-11', 2), -- Beatriz curte EduSmart 
-('654.987.321-00', '12.345.678/0001-00', 1); -- Carlos curte TechNova 
+('987.654.321-00', '12.345.678/0001-00', 1), 
+('456.789.123-00', '44.555.666/0001-33', 3),
+('321.654.987-00', '98.765.432/0001-11', 2), 
+('654.987.321-00', '12.345.678/0001-00', 1); 
 
 INSERT INTO matches (cpf_candidato, cnpj_empresa, id_vaga, origem)
 VALUES
