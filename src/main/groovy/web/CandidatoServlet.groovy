@@ -6,8 +6,6 @@ import model.Candidato
 
 import javax.servlet.http.*
 import javax.servlet.annotation.WebServlet
-import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.SQLException
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -42,24 +40,29 @@ class CandidatoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        def candidato = new Candidato(
-                cpf: req.getParameter("cpf"),
-                nome: req.getParameter("nome"),
-                sobrenome: req.getParameter("sobrenome"),
-                email: req.getParameter("email"),
-                estado: req.getParameter("estado"),
-                descricao: req.getParameter("descricao"),
-                cep: req.getParameter("cep"),
-                senha: req.getParameter("senha"),
-                data_nascimento: java.sql.Date.valueOf(req.getParameter("data_nascimento"))
-        )
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
+
+        BufferedReader reader = req.getReader();
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+
+        String body = sb.toString();
+
+        ObjectMapper mapper = new ObjectMapper();
+        Candidato candidato = mapper.readValue(body, Candidato.class)
 
         try {
-            candidatoController.cadastrarCandidato(candidato)
-            resp.getWriter().write("Candidato criado!")
+            candidatoController.cadastrarCandidato(candidato);
+            resp.getWriter().write("{\"status\":\"ok\", \"msg\":\"Candidato criado!\"}");
         } catch (SQLException e) {
-            e.printStackTrace()
-            resp.getWriter().write("Erro ao acessar o banco: " + e.message)
+            e.printStackTrace();
+            resp.getWriter().write("{\"status\":\"erro\", \"msg\":\"" + e.getMessage() + "\"}");
         }
     }
 }

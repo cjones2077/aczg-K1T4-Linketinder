@@ -70,7 +70,6 @@ class CurtidaDAO {
         }
     }
 
-    // --- Verifica se já existe reciprocidade ---
     private void verificarMatch(String cpfCandidato, Integer idVaga = null, String cnpjEmpresa = null) {
         if (idVaga != null) {
             String sql = """
@@ -102,21 +101,20 @@ class CurtidaDAO {
             comando.close()
         }
     }
-
-    // --- Cria um match se ainda não existe ---
+    
     private void criarMatchSeReciproco(String cpf, String cnpj, int idVaga, String origem) {
         String sqlCheck = """
             SELECT COUNT(*) FROM matches
             WHERE cpf_candidato = ? AND cnpj_empresa = ? AND id_vaga = ?
         """
-        PreparedStatement checkCmd = conexao.prepareStatement(sqlCheck)
-        checkCmd.setString(1, cpf)
-        checkCmd.setString(2, cnpj)
-        checkCmd.setInt(3, idVaga)
-        ResultSet rs = checkCmd.executeQuery()
+        PreparedStatement comando = conexao.prepareStatement(sqlCheck)
+        comando.setString(1, cpf)
+        comando.setString(2, cnpj)
+        comando.setInt(3, idVaga)
+        ResultSet rs = comando.executeQuery()
         rs.next()
         int existe = rs.getInt(1)
-        checkCmd.close()
+        comando.close()
 
         if (existe == 0) {
             String insert = """
@@ -146,8 +144,8 @@ class CurtidaDAO {
         }
 
     }
-    static void fecharRecursos(PreparedStatement statement, ResultSet competenciasResult = null) {
+    static void fecharRecursos(PreparedStatement statement, ResultSet rs = null) {
         statement.close()
-        competenciasResult?.close()
+        rs?.close()
     }
 }

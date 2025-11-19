@@ -51,7 +51,7 @@ class EmpresaServlet extends HttpServlet {
         )
 
         try {
-            empresaController.criarEmpresa(empresa)
+            empresaController.cadastrarEmpresa(empresa)
             resp.getWriter().write("Empresa criada!")
         } catch (SQLException e) {
             e.printStackTrace()

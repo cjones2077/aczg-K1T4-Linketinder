@@ -18,8 +18,8 @@ class CandidatoDAO {
 
     void criarCandidato(Candidato candidato) {
         String sql = """INSERT INTO candidatos
-            (cpf, nome, sobrenome, email, data_nascimento, formacao, pais, cep, descricao, senha)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+            (cpf, nome, sobrenome, email, data_nascimento, formacao, pais, cep, descricao, senha, estado, idade)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
         try {
             PreparedStatement comando = conexao.prepareStatement(sql)
             comando.setString(1, candidato.cpf)
@@ -32,6 +32,8 @@ class CandidatoDAO {
             comando.setString(8, candidato.cep)
             comando.setString(9, candidato.descricao)
             comando.setString(10, candidato.senha)
+            comando.setString(11, candidato.estado)
+            comando.setInt(12, candidato.idade)
             comando.executeUpdate()
             fecharRecursos(comando)
         } catch (SQLException e) {
@@ -67,7 +69,9 @@ class CandidatoDAO {
                 pais: rs.getString("pais"),
                 cep: rs.getString("cep"),
                 descricao: rs.getString("descricao"),
-                senha: rs.getString("senha")
+                senha: rs.getString("senha"),
+                estado: rs.getString("estado"),
+                idade: rs.getInt("idade")
         )
         candidato.competencias = competenciaDAO.buscarPorCandidato(candidato.cpf)
         return candidato
@@ -75,7 +79,8 @@ class CandidatoDAO {
 
     void atualizarCandidato(Candidato candidato) {
         String sql = """UPDATE candidatos SET nome = ?, sobrenome = ?, email = ?,
-            data_nascimento = ?, formacao = ?, pais = ?, cep = ?, descricao = ?, senha = ? WHERE cpf = ?"""
+            data_nascimento = ?, formacao = ?, pais = ?, cep = ?, descricao = ?, senha = ?, estado = ?, idade = ?, 
+            WHERE cpf = ?"""
         try {
             PreparedStatement comando = conexao.prepareStatement(sql)
             comando.setString(1, candidato.nome)
@@ -87,7 +92,10 @@ class CandidatoDAO {
             comando.setString(7, candidato.cep)
             comando.setString(8, candidato.descricao)
             comando.setString(9, candidato.senha)
-            comando.setString(10, candidato.cpf)
+            comando.setString(10, candidato.estado)
+            comando.setInt(11, candidato.idade)
+            comando.setString(12, candidato.cpf)
+
             comando.executeUpdate()
             fecharRecursos(comando)
         } catch (SQLException e) {
